@@ -14,7 +14,8 @@ struct exampleAPIUse: View {
     let api = trackGenerationAPI()
     @State private var input = ""
     @State private var link = ""
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Environment(\.presentationMode) var presentationMode
+
 
     
     let pat = "YW50b25pb19hbmRfZnJpZW5kcy4xODU1MTA5Ny5lMWQwODBkNjQ5M2EyZmNkZGE3Yjg3ZjEyYjE4YTdiZmU4OWM1NGQ1LjEuMw.b952a32df79024eadc42b52091ae06a28e403a256abf0a6a3fe9538a6181842a"
@@ -36,6 +37,20 @@ struct exampleAPIUse: View {
         switch currentView {
         case .inputView:
             inputView
+                .navigationBarBackButtonHidden(true)
+                .navigationBarItems(
+                               leading: Button(action: {
+                                   // handle custom back button action here
+                                   presentationMode.wrappedValue.dismiss()
+                                   let impactMed = UIImpactFeedbackGenerator(style: .light)
+                                   impactMed.impactOccurred()
+
+                               }, label: {
+                                   Image(systemName: "chevron.left")
+                                       .font(.system(size: 24))
+                                       .foregroundColor(.white)
+                               })
+                           )
         case .magicScreen:
             MagicScreen()
                 .task {
@@ -55,6 +70,7 @@ struct exampleAPIUse: View {
             
             
         }
+        
     }
     
     var inputView: some View {
@@ -202,9 +218,17 @@ struct exampleAPIUse: View {
                 dismissButton: .default(Text("OK"))
             )
         }
+        
+        
+        
+        
 
     }
+    
+    
+    
 }
+
 
 
 enum CurrentView {
