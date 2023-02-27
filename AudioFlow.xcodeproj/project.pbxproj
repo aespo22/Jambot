@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		41F4968529ACF00100A218B8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41F4968429ACF00100A218B8 /* LaunchScreen.storyboard */; };
 		6E504E7329ACE7ED00B9ECEF /* AudioFlowApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E504E7229ACE7ED00B9ECEF /* AudioFlowApp.swift */; };
-		6E504E7529ACE7ED00B9ECEF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E504E7429ACE7ED00B9ECEF /* ContentView.swift */; };
 		6E504E7729ACE7EE00B9ECEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E504E7629ACE7EE00B9ECEF /* Assets.xcassets */; };
 		6E504E7A29ACE7EE00B9ECEF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E504E7929ACE7EE00B9ECEF /* Preview Assets.xcassets */; };
 		6E504E7C29ACE7EE00B9ECEF /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E504E7B29ACE7EE00B9ECEF /* Persistence.swift */; };
@@ -30,7 +29,6 @@
 		41F4968429ACF00100A218B8 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6E504E6F29ACE7ED00B9ECEF /* AudioFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E504E7229ACE7ED00B9ECEF /* AudioFlowApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFlowApp.swift; sourceTree = "<group>"; };
-		6E504E7429ACE7ED00B9ECEF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6E504E7629ACE7EE00B9ECEF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6E504E7929ACE7EE00B9ECEF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		6E504E7B29ACE7EE00B9ECEF /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -62,7 +60,6 @@
 			isa = PBXGroup;
 			children = (
 				6E504E8B29ACE93300B9ECEF /* exampleAPIUse.swift */,
-				6E504E7429ACE7ED00B9ECEF /* ContentView.swift */,
 				6E504E8529ACE8A100B9ECEF /* MagicView.swift */,
 				6E504E8D29ACE94700B9ECEF /* HistoryView.swift */,
 				6E504E9129ACE96900B9ECEF /* MagicScreen.swift */,
@@ -205,7 +202,6 @@
 				6E504E8C29ACE93300B9ECEF /* exampleAPIUse.swift in Sources */,
 				6E504E8829ACE90500B9ECEF /* Checker.swift in Sources */,
 				6E504E7C29ACE7EE00B9ECEF /* Persistence.swift in Sources */,
-				6E504E7529ACE7ED00B9ECEF /* ContentView.swift in Sources */,
 				6E504E8A29ACE91C00B9ECEF /* OfficialAPI.swift in Sources */,
 				6E504E9629ACE99C00B9ECEF /* Textfield.swift in Sources */,
 				6E504E9029ACE95B00B9ECEF /* MagicBg.swift in Sources */,
