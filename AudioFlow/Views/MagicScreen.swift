@@ -30,7 +30,7 @@ struct MagicScreen: View {
                     .blur(radius: 20)
             }
             
-            Text("Making some magic...")
+            Text("magic-load")
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundColor(.white)

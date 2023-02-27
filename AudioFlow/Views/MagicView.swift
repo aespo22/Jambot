@@ -61,5 +61,9 @@ struct MagicView: View {
 struct MagicView_Previews: PreviewProvider {
     static var previews: some View {
         MagicView()
+            .environment(\.locale, Locale.init(identifier: "en"))
+        MagicView()
+            .environment(\.locale, Locale.init(identifier: "korean"))
+        
     }
 }

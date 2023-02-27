@@ -8,11 +8,14 @@ import SwiftUI
 
 
 
+
 struct exampleAPIUse: View {
     
     let api = trackGenerationAPI()
     @State private var input = ""
     @State private var link = ""
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+
     
     let pat = "YW50b25pb19hbmRfZnJpZW5kcy4xODU1MTA5Ny5lMWQwODBkNjQ5M2EyZmNkZGE3Yjg3ZjEyYjE4YTdiZmU4OWM1NGQ1LjEuMw.b952a32df79024eadc42b52091ae06a28e403a256abf0a6a3fe9538a6181842a"
     let duration = 60
@@ -24,6 +27,9 @@ struct exampleAPIUse: View {
     @State private var showNoInternetAlert = false
 
     @FocusState private var textFieldIsFocused: Bool
+    
+    
+ 
 
     var body: some View {
         
@@ -56,14 +62,14 @@ struct exampleAPIUse: View {
         VStack {
             HStack {
                 Spacer().frame(width: 20)
-                Text("Enter your keywords")
+                Text("generatestring")
                     .font(.system(size: 30, weight: .bold))
                     .foregroundColor(.white)
                 Spacer()
             }
             Spacer().frame(height: 30)
             
-            TextField("Enter song description", text: $input, axis: .vertical)
+            TextField("songdescriptionstring", text: $input, axis: .vertical)
                 .focused($textFieldIsFocused)
                 .onAppear {
                     self.textFieldIsFocused = true
@@ -200,6 +206,7 @@ struct exampleAPIUse: View {
     }
 }
 
+
 enum CurrentView {
     case inputView
     case magicScreen
@@ -209,5 +216,9 @@ enum CurrentView {
 struct API_Previews: PreviewProvider {
     static var previews: some View {
         exampleAPIUse()
+            .environment(\.locale, Locale.init(identifier: "eng"))
+        exampleAPIUse()
+            .environment(\.locale, Locale.init(identifier: "kor"))
+        
     }
 }

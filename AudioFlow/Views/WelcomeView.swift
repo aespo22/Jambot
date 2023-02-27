@@ -12,17 +12,17 @@ struct WelcomeView: View {
             HStack {
                 VStack(alignment: .leading) {
                     NavigationLink(destination: exampleAPIUse().navigationBarBackButtonHidden(true)) {
-                        Text("Create your first")
+                        Text("welcome")
                             .font(.system(size: 30))
                             .foregroundColor(.white)
                     }
                     NavigationLink(destination: exampleAPIUse().navigationBarBackButtonHidden(true)) {
-                        Text("AI Generated")
+                        Text("aigenerationwelcome")
                             .font(.system(size: 30, weight: .bold))
                             .foregroundColor(.white)
                     }
                     NavigationLink(destination: exampleAPIUse().navigationBarBackButtonHidden(true)) {
-                        Text("song")
+                        Text("welcomesongstring")
                             .font(.system(size: 30))
                             .foregroundColor(.white)
                     }
@@ -47,5 +47,8 @@ struct WelcomeView: View {
 struct WelcomeView_Previews: PreviewProvider {
     static var previews: some View {
         WelcomeView()
+            .environment(\.locale, Locale.init(identifier: "en"))
+        WelcomeView()
+            .environment(\.locale, Locale.init(identifier: "korean"))
     }
 }

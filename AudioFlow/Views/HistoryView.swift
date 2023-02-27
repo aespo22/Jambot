@@ -49,7 +49,7 @@ struct HistoryView: View {
                                 VStack (alignment: .leading){
                                     Text(song.tags)
                                         .font(.headline)
-                                    Text("Created in \(song.creation)")
+                                    Text("created_in \(song.creation)")
                                         .font(.subheadline)
                                 }.padding(.leading, 5)
                                 Spacer()
@@ -65,7 +65,7 @@ struct HistoryView: View {
                     Spacer()
                 }
                 .clipped()
-                .navigationBarTitle("History")
+                .navigationBarTitle("historytabtitle")
                 
                 NavigationLink(destination: exampleAPIUse()) {
                     ZStack {
@@ -74,7 +74,7 @@ struct HistoryView: View {
                             Image(systemName: "plus")
                                 .foregroundColor(.white)
                                 .font(.headline)
-                            Text("Generate Song")
+                            Text("generate-string")
                                 .foregroundColor(.white)
                                 .font(.headline)
                         }
@@ -95,6 +95,9 @@ struct HistoryView: View {
     struct HistoryView_Previews: PreviewProvider {
         static var previews: some View {
             HistoryView()
+                .environment(\.locale, Locale.init(identifier: "kor"))
+            HistoryView()
+                .environment(\.locale, Locale.init(identifier: "eng"))
         }
     }
 }
