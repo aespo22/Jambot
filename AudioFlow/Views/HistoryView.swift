@@ -49,7 +49,8 @@ struct HistoryView: View {
                                 VStack (alignment: .leading){
                                     Text(song.tags)
                                         .font(.headline)
-                                    Text("created_in \(song.creation)")
+                                    Text(String(format: NSLocalizedString("created_in", comment: ""), song.creation))
+
                                         .font(.subheadline)
                                 }.padding(.leading, 5)
                                 Spacer()

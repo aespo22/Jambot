@@ -2,7 +2,7 @@
 "magic-load" = "Fazendo mágica...";
 "generate-string" = "Gerar música";
 "historytabtitle"= "História";
-"created_in" = "Criado em %@";
+"created_in" = "Criado em %@ ";
 "welcome" = "Crie seu primeiro";
 "aigenerationwelcome" = "IA Gerada";
 "welcomesongstring" = "canção";

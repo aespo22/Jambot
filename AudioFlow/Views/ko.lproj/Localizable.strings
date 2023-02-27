@@ -2,7 +2,7 @@
 "magic-load" = "마법을 부리다...";
 "generate-string" = "노래 생성";
 "historytabtitle"= "역사";
-"created_in" = "만든 %@";
+"created_in" = "만든 %@ \(song.creation) ";
 "welcome" = "첫 번째 만들기";
 "aigenerationwelcome" = "AI 생성";
 "welcomesongstring" = "노래";
