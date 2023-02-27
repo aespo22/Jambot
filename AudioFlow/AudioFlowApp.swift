@@ -6,15 +6,28 @@
 //
 
 import SwiftUI
+import Network
+
+class NetworkMonitor: ObservableObject {
+    let monitor = NWPathMonitor()
+    let queue = DispatchQueue(label: "InternetConnectionMonitor")
+    @Published var isConnected = false
+    
+    init() {
+        monitor.pathUpdateHandler = { path in
+            self.isConnected = path.status == .satisfied
+        }
+        monitor.start(queue: queue)
+    }
+}
 
 @main
-struct AudioFlowApp: App {
-    let persistenceController = PersistenceController.shared
-
+struct AudioFlow: App {
+    let networkMonitor = NetworkMonitor()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            HistoryView()
         }
     }
 }

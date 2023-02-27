@@ -13,6 +13,16 @@
 		6E504E7A29ACE7EE00B9ECEF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E504E7929ACE7EE00B9ECEF /* Preview Assets.xcassets */; };
 		6E504E7C29ACE7EE00B9ECEF /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E504E7B29ACE7EE00B9ECEF /* Persistence.swift */; };
 		6E504E7F29ACE7EE00B9ECEF /* AudioFlow.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6E504E7D29ACE7EE00B9ECEF /* AudioFlow.xcdatamodeld */; };
+		6E504E8629ACE8A100B9ECEF /* MagicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E504E8529ACE8A100B9ECEF /* MagicView.swift */; };
+		6E504E8829ACE90500B9ECEF /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E504E8729ACE90500B9ECEF /* Checker.swift */; };
+		6E504E8A29ACE91C00B9ECEF /* OfficialAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E504E8929ACE91C00B9ECEF /* OfficialAPI.swift */; };
+		6E504E8C29ACE93300B9ECEF /* exampleAPIUse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E504E8B29ACE93300B9ECEF /* exampleAPIUse.swift */; };
+		6E504E8E29ACE94700B9ECEF /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E504E8D29ACE94700B9ECEF /* HistoryView.swift */; };
+		6E504E9029ACE95B00B9ECEF /* MagicBg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E504E8F29ACE95B00B9ECEF /* MagicBg.swift */; };
+		6E504E9229ACE96900B9ECEF /* MagicScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E504E9129ACE96900B9ECEF /* MagicScreen.swift */; };
+		6E504E9429ACE98600B9ECEF /* MusicPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E504E9329ACE98600B9ECEF /* MusicPlayerView.swift */; };
+		6E504E9629ACE99C00B9ECEF /* Textfield.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E504E9529ACE99C00B9ECEF /* Textfield.swift */; };
+		6E504E9829ACE9B300B9ECEF /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E504E9729ACE9B300B9ECEF /* WelcomeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +33,16 @@
 		6E504E7929ACE7EE00B9ECEF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		6E504E7B29ACE7EE00B9ECEF /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		6E504E7E29ACE7EE00B9ECEF /* AudioFlow.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AudioFlow.xcdatamodel; sourceTree = "<group>"; };
+		6E504E8529ACE8A100B9ECEF /* MagicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicView.swift; sourceTree = "<group>"; };
+		6E504E8729ACE90500B9ECEF /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
+		6E504E8929ACE91C00B9ECEF /* OfficialAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficialAPI.swift; sourceTree = "<group>"; };
+		6E504E8B29ACE93300B9ECEF /* exampleAPIUse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exampleAPIUse.swift; sourceTree = "<group>"; };
+		6E504E8D29ACE94700B9ECEF /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		6E504E8F29ACE95B00B9ECEF /* MagicBg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicBg.swift; sourceTree = "<group>"; };
+		6E504E9129ACE96900B9ECEF /* MagicScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicScreen.swift; sourceTree = "<group>"; };
+		6E504E9329ACE98600B9ECEF /* MusicPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerView.swift; sourceTree = "<group>"; };
+		6E504E9529ACE99C00B9ECEF /* Textfield.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Textfield.swift; sourceTree = "<group>"; };
+		6E504E9729ACE9B300B9ECEF /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,8 +77,18 @@
 			children = (
 				6E504E7229ACE7ED00B9ECEF /* AudioFlowApp.swift */,
 				6E504E7429ACE7ED00B9ECEF /* ContentView.swift */,
+				6E504E8529ACE8A100B9ECEF /* MagicView.swift */,
 				6E504E7629ACE7EE00B9ECEF /* Assets.xcassets */,
 				6E504E7B29ACE7EE00B9ECEF /* Persistence.swift */,
+				6E504E8729ACE90500B9ECEF /* Checker.swift */,
+				6E504E8929ACE91C00B9ECEF /* OfficialAPI.swift */,
+				6E504E8B29ACE93300B9ECEF /* exampleAPIUse.swift */,
+				6E504E8D29ACE94700B9ECEF /* HistoryView.swift */,
+				6E504E8F29ACE95B00B9ECEF /* MagicBg.swift */,
+				6E504E9129ACE96900B9ECEF /* MagicScreen.swift */,
+				6E504E9329ACE98600B9ECEF /* MusicPlayerView.swift */,
+				6E504E9529ACE99C00B9ECEF /* Textfield.swift */,
+				6E504E9729ACE9B300B9ECEF /* WelcomeView.swift */,
 				6E504E7D29ACE7EE00B9ECEF /* AudioFlow.xcdatamodeld */,
 				6E504E7829ACE7EE00B9ECEF /* Preview Content */,
 			);
@@ -144,9 +174,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				6E504E7F29ACE7EE00B9ECEF /* AudioFlow.xcdatamodeld in Sources */,
+				6E504E8C29ACE93300B9ECEF /* exampleAPIUse.swift in Sources */,
+				6E504E8829ACE90500B9ECEF /* Checker.swift in Sources */,
 				6E504E7C29ACE7EE00B9ECEF /* Persistence.swift in Sources */,
 				6E504E7529ACE7ED00B9ECEF /* ContentView.swift in Sources */,
+				6E504E8A29ACE91C00B9ECEF /* OfficialAPI.swift in Sources */,
+				6E504E9629ACE99C00B9ECEF /* Textfield.swift in Sources */,
+				6E504E9029ACE95B00B9ECEF /* MagicBg.swift in Sources */,
+				6E504E8629ACE8A100B9ECEF /* MagicView.swift in Sources */,
+				6E504E8E29ACE94700B9ECEF /* HistoryView.swift in Sources */,
+				6E504E9429ACE98600B9ECEF /* MusicPlayerView.swift in Sources */,
+				6E504E9229ACE96900B9ECEF /* MagicScreen.swift in Sources */,
 				6E504E7329ACE7ED00B9ECEF /* AudioFlowApp.swift in Sources */,
+				6E504E9829ACE9B300B9ECEF /* WelcomeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,6 +323,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -312,6 +353,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
