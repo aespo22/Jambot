@@ -56,6 +56,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		41F4967F29ACED2400A218B8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6E504E8B29ACE93300B9ECEF /* exampleAPIUse.swift */,
+				6E504E7429ACE7ED00B9ECEF /* ContentView.swift */,
+				6E504E8529ACE8A100B9ECEF /* MagicView.swift */,
+				6E504E8D29ACE94700B9ECEF /* HistoryView.swift */,
+				6E504E9129ACE96900B9ECEF /* MagicScreen.swift */,
+				6E504E8F29ACE95B00B9ECEF /* MagicBg.swift */,
+				6E504E9329ACE98600B9ECEF /* MusicPlayerView.swift */,
+				6E504E9729ACE9B300B9ECEF /* WelcomeView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		41F4968029ACED4C00A218B8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6E504E7B29ACE7EE00B9ECEF /* Persistence.swift */,
+				6E504E8729ACE90500B9ECEF /* Checker.swift */,
+				6E504E8929ACE91C00B9ECEF /* OfficialAPI.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		41F4968129ACED7000A218B8 /* Future */ = {
+			isa = PBXGroup;
+			children = (
+				6E504E9529ACE99C00B9ECEF /* Textfield.swift */,
+			);
+			path = Future;
+			sourceTree = "<group>";
+		};
 		6E504E6629ACE7ED00B9ECEF = {
 			isa = PBXGroup;
 			children = (
@@ -76,19 +109,10 @@
 			isa = PBXGroup;
 			children = (
 				6E504E7229ACE7ED00B9ECEF /* AudioFlowApp.swift */,
-				6E504E7429ACE7ED00B9ECEF /* ContentView.swift */,
-				6E504E8529ACE8A100B9ECEF /* MagicView.swift */,
+				41F4967F29ACED2400A218B8 /* Views */,
 				6E504E7629ACE7EE00B9ECEF /* Assets.xcassets */,
-				6E504E7B29ACE7EE00B9ECEF /* Persistence.swift */,
-				6E504E8729ACE90500B9ECEF /* Checker.swift */,
-				6E504E8929ACE91C00B9ECEF /* OfficialAPI.swift */,
-				6E504E8B29ACE93300B9ECEF /* exampleAPIUse.swift */,
-				6E504E8D29ACE94700B9ECEF /* HistoryView.swift */,
-				6E504E8F29ACE95B00B9ECEF /* MagicBg.swift */,
-				6E504E9129ACE96900B9ECEF /* MagicScreen.swift */,
-				6E504E9329ACE98600B9ECEF /* MusicPlayerView.swift */,
-				6E504E9529ACE99C00B9ECEF /* Textfield.swift */,
-				6E504E9729ACE9B300B9ECEF /* WelcomeView.swift */,
+				41F4968029ACED4C00A218B8 /* Models */,
+				41F4968129ACED7000A218B8 /* Future */,
 				6E504E7D29ACE7EE00B9ECEF /* AudioFlow.xcdatamodeld */,
 				6E504E7829ACE7EE00B9ECEF /* Preview Content */,
 			);
