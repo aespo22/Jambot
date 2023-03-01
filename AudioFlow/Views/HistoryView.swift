@@ -54,37 +54,57 @@ struct HistoryView: View {
                 NavigationView {
                     VStack(spacing: 16) {
                         Spacer().frame(height: 20)
-                        List {
-                            ForEach(getFiles()) { file in
-                                NavigationLink(destination: OfflinePlayerView(filePath: file.path.path, input: file.input, date: file.date)) {
-                                    HStack{
-                                        RandomColorView().cornerRadius(10)
-                                        Spacer().frame(width: 10)
-                                        VStack(alignment: .leading) {
-                                            Text(file.input)
-                                                .font(.headline)
-                                                .lineLimit(1)
-                                            Spacer().frame(height: 4)
-
-                                            Text(file.date)
-                                                .font(.subheadline)
-                                                .foregroundColor(.gray)
-                                        }
-                                        Spacer()
-                                    }
-                                    .foregroundColor(.primary)
-                                }.swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                                    Button(role: .destructive) {
-                                        selectedFile = file
-                                        showAlert = true
-                                    } label: {
-                                        Label("Delete", systemImage: "trash")
-                                    }
-                                }
+                        
+                        
+                        if getFiles().isEmpty {
+                            VStack {
+                                Text("No Songs Saved")
+                                    .font(.title)
+                                    .foregroundColor(.gray)
+                                Spacer().frame(height: 10)
+                                Text("Try adding a new song below!")
+                                    .font(.headline)
+                                    .foregroundColor(.gray)
+                                
                             }
                             
                         }
-                        .listStyle(PlainListStyle())
+                            else {
+                                List {
+                                    
+                                    ForEach(getFiles()) { file in
+                                        NavigationLink(destination: OfflinePlayerView(filePath: file.path.path, input: file.input, date: file.date)) {
+                                            HStack{
+                                                RandomColorView().cornerRadius(10)
+                                                Spacer().frame(width: 10)
+                                                VStack(alignment: .leading) {
+                                                    Text(file.input)
+                                                        .font(.headline)
+                                                        .lineLimit(1)
+                                                    Spacer().frame(height: 4)
+
+                                                    Text(file.date)
+                                                        .font(.subheadline)
+                                                        .foregroundColor(.gray)
+                                                }
+                                                Spacer()
+                                            }
+                                            .foregroundColor(.primary)
+                                        }.swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                                            Button(role: .destructive) {
+                                                selectedFile = file
+                                                showAlert = true
+                                            } label: {
+                                                Label("Delete", systemImage: "trash")
+                                            }
+                                        }
+                                    }
+                                    
+                                }
+                                .listStyle(PlainListStyle())
+                                
+                            }
+
 
 
                         
@@ -109,7 +129,6 @@ struct HistoryView: View {
                             let impactMed = UIImpactFeedbackGenerator(style: .medium)
                             impactMed.impactOccurred()
                         })
-                        Spacer()
                     }
                     .navigationBarTitle("History")
 
