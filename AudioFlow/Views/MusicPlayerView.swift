@@ -11,6 +11,9 @@ import AVFoundation
 class SoundManager: ObservableObject {
     
     
+    
+    
+    
     init(){
         UINavigationBar.setAnimationsEnabled(false)
     }
@@ -73,13 +76,15 @@ class SoundManager: ObservableObject {
 struct MusicPlayerView: View {
     @State var isPlaying = false
     @State var currentTime: Double = 0.0
+    @State var saveText: String = "Save"
     @StateObject private var soundManager = SoundManager()
     
     @Binding var officialLink: String
     @Binding var input: String
     
     
-    
+    let downloadManager = DownloadManager()
+
     
     var body: some View {
         
@@ -161,6 +166,7 @@ struct MusicPlayerView: View {
             impactLight.impactOccurred()
             
             soundManager.pause()
+            
         }
         .navigationBarItems(
             leading: NavigationLink(destination: HistoryView()) {
@@ -173,8 +179,12 @@ struct MusicPlayerView: View {
             //this now going to the history view, but it has to be implemented a save function
             
             trailing: NavigationLink(destination: HistoryView()) {
-                Text("Save")
+                Text(saveText)
                     .foregroundColor(.primary)
+                    .onTapGesture {
+                        saveText = "Saved!"
+                        downloadManager.saveMp3ToPhone(input: input, url: URL(string: officialLink)!)
+                    }
             }
             
         )
