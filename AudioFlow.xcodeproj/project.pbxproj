@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4196FAAF29AD061B00F1EE34 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4196FAAE29AD061B00F1EE34 /* DownloadManager.swift */; };
+		4196FAB329AE456D00F1EE34 /* OfflinePlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4196FAB229AE456D00F1EE34 /* OfflinePlayerView.swift */; };
 		41F4968529ACF00100A218B8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41F4968429ACF00100A218B8 /* LaunchScreen.storyboard */; };
 		6E504E7329ACE7ED00B9ECEF /* AudioFlowApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E504E7229ACE7ED00B9ECEF /* AudioFlowApp.swift */; };
 		6E504E7729ACE7EE00B9ECEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E504E7629ACE7EE00B9ECEF /* Assets.xcassets */; };
@@ -26,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4196FAAE29AD061B00F1EE34 /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
+		4196FAB229AE456D00F1EE34 /* OfflinePlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflinePlayerView.swift; sourceTree = "<group>"; };
 		41F4968429ACF00100A218B8 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6E504E6F29ACE7ED00B9ECEF /* AudioFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E504E7229ACE7ED00B9ECEF /* AudioFlowApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFlowApp.swift; sourceTree = "<group>"; };
@@ -65,6 +69,7 @@
 				6E504E9129ACE96900B9ECEF /* MagicScreen.swift */,
 				6E504E8F29ACE95B00B9ECEF /* MagicBg.swift */,
 				6E504E9329ACE98600B9ECEF /* MusicPlayerView.swift */,
+				4196FAB229AE456D00F1EE34 /* OfflinePlayerView.swift */,
 				6E504E9729ACE9B300B9ECEF /* WelcomeView.swift */,
 			);
 			path = Views;
@@ -76,6 +81,7 @@
 				6E504E7B29ACE7EE00B9ECEF /* Persistence.swift */,
 				6E504E8729ACE90500B9ECEF /* Checker.swift */,
 				6E504E8929ACE91C00B9ECEF /* OfficialAPI.swift */,
+				4196FAAE29AD061B00F1EE34 /* DownloadManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -199,6 +205,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6E504E7F29ACE7EE00B9ECEF /* AudioFlow.xcdatamodeld in Sources */,
+				4196FAAF29AD061B00F1EE34 /* DownloadManager.swift in Sources */,
 				6E504E8C29ACE93300B9ECEF /* exampleAPIUse.swift in Sources */,
 				6E504E8829ACE90500B9ECEF /* Checker.swift in Sources */,
 				6E504E7C29ACE7EE00B9ECEF /* Persistence.swift in Sources */,
@@ -209,6 +216,7 @@
 				6E504E8E29ACE94700B9ECEF /* HistoryView.swift in Sources */,
 				6E504E9429ACE98600B9ECEF /* MusicPlayerView.swift in Sources */,
 				6E504E9229ACE96900B9ECEF /* MagicScreen.swift in Sources */,
+				4196FAB329AE456D00F1EE34 /* OfflinePlayerView.swift in Sources */,
 				6E504E7329ACE7ED00B9ECEF /* AudioFlowApp.swift in Sources */,
 				6E504E9829ACE9B300B9ECEF /* WelcomeView.swift in Sources */,
 			);
