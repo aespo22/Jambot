@@ -13,6 +13,16 @@ struct Song {
     let mp3Link: String
 }
 
+
+
+struct FileInfo: Identifiable {
+    let id = UUID()
+    let input: String
+    let date: String
+    let path: URL
+}
+
+
 struct RandomColorView: View {
     
     var body: some View {
@@ -28,73 +38,141 @@ struct RandomColorView: View {
     }
 }
 struct HistoryView: View {
-    let songs: [Song] = [
-        Song(tags: "grinder back baby", creation: "2022", image: "testImage", mp3Link: "song1Link"),
-        Song(tags: "wondering, crazy, beautiful", creation: "2021", image: "song2Image", mp3Link: "song2Link"),
-        Song(tags: "bleeding, hard, dance", creation: "2020", image: "song3Image", mp3Link: "song3Link"),
-        Song(tags: "trap dark remix", creation: "2020", image: "song3Image", mp3Link: "song3Link"),
-        Song(tags: "upbeat loop big energy cap", creation: "2020", image: "song3Image", mp3Link: "song3Link"),
-        // add more songs as needed
-    ]
+    let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    let folderUrl: URL
+    
+    init() {
+        folderUrl = documentsUrl.appendingPathComponent("mp3JamBotFiles")
+    }
+    
+    @State private var showAlert = false
+    @State private var selectedFile: FileInfo?
     
     var body: some View {
-        NavigationView {
-            VStack (alignment: .leading) {
-                ScrollView(showsIndicators: false) {
-                    Spacer().frame(height: 20)
-                    ForEach(songs, id: \.tags) { song in
-                        VStack {
-                            HStack {
-                                RandomColorView().cornerRadius(10)
-                                VStack (alignment: .leading){
-                                    Text(song.tags)
-                                        .font(.headline)
-                                    Text("Created in \(song.creation)")
-                                        .font(.subheadline)
-                                }.padding(.leading, 5)
-                                Spacer()
-                                Button(action: {
-                                    // add code to play the song
-                                }) {
-                                    Image(systemName: "play.fill")
+        
+        VStack (alignment: .leading) {
+                NavigationView {
+                    VStack(spacing: 16) {
+                        Spacer().frame(height: 20)
+                        List {
+                            ForEach(getFiles()) { file in
+                                NavigationLink(destination: OfflinePlayerView(filePath: file.path.path, input: file.input, date: file.date)) {
+                                    HStack{
+                                        RandomColorView().cornerRadius(10)
+                                        Spacer().frame(width: 10)
+                                        VStack(alignment: .leading) {
+                                            Text(file.input)
+                                                .font(.headline)
+                                                .lineLimit(1)
+                                            Spacer().frame(height: 4)
+
+                                            Text(file.date)
+                                                .font(.subheadline)
+                                                .foregroundColor(.gray)
+                                        }
+                                        Spacer()
+                                    }
+                                    .foregroundColor(.primary)
+                                }.swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                                    Button(role: .destructive) {
+                                        selectedFile = file
+                                        showAlert = true
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                    }
                                 }
                             }
+                            
                         }
+                        .listStyle(PlainListStyle())
+
+
+                        
+                        Spacer()
+                        NavigationLink(destination: exampleAPIUse()) {
+                            ZStack {
+                                Color(red: 199/255, green: 37/255, blue: 115/255, opacity: 1.0)
+                                HStack {
+                                    Image(systemName: "plus")
+                                        .foregroundColor(.white)
+                                        .font(.headline)
+                                    Text("Generate Song")
+                                        .foregroundColor(.white)
+                                        .font(.headline)
+                                }
+                            }
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 60)
+                            .cornerRadius(12)
+                        }
+                        .simultaneousGesture(TapGesture().onEnded {
+                            let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                            impactMed.impactOccurred()
+                        })
+                        Spacer()
                     }
-                    .padding(.horizontal, 30)
-                    Spacer()
+                    .navigationBarTitle("History")
+
+
                 }
-                .clipped()
-                .navigationBarTitle("History")
-                
-                NavigationLink(destination: exampleAPIUse()) {
-                    ZStack {
-                        Color(red: 199/255, green: 37/255, blue: 115/255, opacity: 1.0)
-                        HStack {
-                            Image(systemName: "plus")
-                                .foregroundColor(.white)
-                                .font(.headline)
-                            Text("Generate Song")
-                                .foregroundColor(.white)
-                                .font(.headline)
-                        }
-                    }
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 60)
-                    .cornerRadius(12)
-                }.simultaneousGesture(TapGesture().onEnded {
-                    let impactMed = UIImpactFeedbackGenerator(style: .medium)
-                    impactMed.impactOccurred()
-                })
-                
-            }
+                .navigationBarBackButtonHidden(true)
+
+            
+        } .alert(isPresented: $showAlert) {
+            Alert(title: Text("Confirm Deletion"), message: Text("Are you sure you want to delete this file?"), primaryButton: .destructive(Text("Delete")) {
+                if let file = selectedFile {
+                    deleteFile(file)
+                    selectedFile = nil
+                }
+            }, secondaryButton: .cancel(Text("Cancel")))
         }
-        .navigationBarBackButtonHidden(true)
     }
     
-    struct HistoryView_Previews: PreviewProvider {
-        static var previews: some View {
-            HistoryView()
+    func deleteFile(_ file: FileInfo) {
+            do {
+                try FileManager.default.removeItem(at: file.path)
+            } catch {
+                print("Error deleting file: \(error)")
+            }
         }
+    
+    
+    func getFiles() -> [FileInfo] {
+        let fileManager = FileManager.default
+        let documentsUrl = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let directoryUrl = documentsUrl.appendingPathComponent("mp3JamBotFiles")
+        
+        var fileInfos: [FileInfo] = []
+        
+        do {
+            let files = try fileManager.contentsOfDirectory(at: directoryUrl, includingPropertiesForKeys: nil)
+            for file in files {
+                if file.lastPathComponent.starts(with: ".DS_Store") {
+                    continue // Ignore .DS_Store file
+                }
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd-HH-mm"
+                let filename = file.lastPathComponent
+                if let date = dateFormatter.date(from: String(filename.prefix(16))) {
+                    let input = String(filename.dropFirst(17).dropLast(4)).replacingOccurrences(of: "-", with: " ")
+                    fileInfos.append(FileInfo(input: input, date: formatDate(date), path: file))
+                } else {
+                    fatalError("Error parsing date from file name: \(filename)")
+                }
+            }
+        } catch {
+            print(error)
+        }
+        
+        return fileInfos
     }
+    
+    func formatDate(_ date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .short
+        return dateFormatter.string(from: date)
+    }
+    
+    
 }

@@ -4,10 +4,8 @@
 //
 //  Created by Maura De Chiara  on 20/02/23.
 //
-
-
-
 import SwiftUI
+
 struct MagicScreen: View {
     @State private var colors = [Color.purple, Color.pink, Color.yellow, Color.mint]
     let gradient = Gradient(colors: [Color.purple,Color.blue, Color.yellow, Color.mint])
