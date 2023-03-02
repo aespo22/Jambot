@@ -24,16 +24,16 @@ struct OfflinePlayerView: View {
     var body: some View {
          
         VStack {
-            Text("Keywords:")
+            Text("Prompt:")
                 .bold()
                 .font(.title)
                 .padding(.top, 50)
-                .foregroundColor(.gray)
+                .foregroundColor(.white)
             
             Spacer().frame(height: 10)
             
             Text(input)
-                .font(.title)
+                .font(.title3)
             
             Spacer().frame(height: 20)
             
@@ -42,9 +42,11 @@ struct OfflinePlayerView: View {
             Spacer()
             
             Button(action: togglePlayPause) {
-                Image(systemName: isPlaying ? "pause.circle.fill" : "play.circle.fill")
-                    .font(.system(size: 100))
+                Image(systemName: isPlaying ? "pause.fill" : "play.fill")
+                    .font(.system(size: 75))
                     .padding()
+                    .foregroundColor(.white) // Add foreground color modifier
+
             }
             
             if let duration = player?.duration {
