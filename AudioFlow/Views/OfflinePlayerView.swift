@@ -12,7 +12,8 @@ struct OfflinePlayerView: View {
     @State private var currentTime: TimeInterval = 0
     @State private var duration: TimeInterval = 0
     
-    
+    @Environment(\.presentationMode) var presentationMode
+
     @State private var timer: Timer? = nil
     
     func formattedTime(time: TimeInterval) -> String {
@@ -71,13 +72,15 @@ struct OfflinePlayerView: View {
 
             .navigationBarItems(
                 leading: Button(action: {
-                    // Your code here
+                    presentationMode.wrappedValue.dismiss()
                 }) {
                     Image(systemName: "chevron.left")
                         .foregroundColor(.white) // Set foreground color to white
                 },
                 trailing:   Button(action: shareFile) {
                     Image(systemName: "square.and.arrow.up")
+                        .foregroundColor(.white)
+
                 }
             )
             .onAppear {
