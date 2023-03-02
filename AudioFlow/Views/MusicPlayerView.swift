@@ -111,8 +111,8 @@ struct MusicPlayerView: View {
             ZStack {
                 VStack {
                     Spacer()
-                    Image(systemName: isPlaying ? "pause.circle.fill" : "play.circle.fill")
-                        .font(.system(size: 100))
+                    Image(systemName: isPlaying ? "pause.fill" : "play.fill")
+                        .font(.system(size: 75))
                         .onTapGesture {
                             if isPlaying {
                                 let impactMed = UIImpactFeedbackGenerator(style: .medium)

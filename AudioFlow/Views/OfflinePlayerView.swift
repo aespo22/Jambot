@@ -12,76 +12,96 @@ struct OfflinePlayerView: View {
     @State private var currentTime: TimeInterval = 0
     @State private var duration: TimeInterval = 0
     
-    
+    @Environment(\.presentationMode) var presentationMode
+
     @State private var timer: Timer? = nil
     
-    
-    var body: some View {
-        
-        VStack {
-            Text("Keywords:")
-                .bold()
-                .font(.title)
-                .padding(.top, 50)
-                .foregroundColor(.gray)
-            
-            Spacer().frame(height: 10)
-            
-            
-            Text(input)
-                .font(.title)
-            
-            Spacer().frame(height: 20)
-            
-            Text(date)
-                .font(.footnote)
-            Spacer()
-            
-            Button(action: togglePlayPause) {
-                Image(systemName: isPlaying ? "pause.circle.fill" : "play.circle.fill")
-                    .font(.system(size: 100))
-                    .padding()
-            }
-            Spacer()
-            HStack (alignment: .center){
-                Text(formatTimeInterval(currentTime))
-                Slider(value: $currentTime, in: 0...duration, onEditingChanged: sliderEditingChanged)
-                    .accentColor(.blue)
-                Text(formatTimeInterval(duration))
-            }
-            Spacer()
-        }
-        .navigationBarItems(trailing:
-            Button(action: shareFile) {
-                Image(systemName: "square.and.arrow.up")
-            }
-        )
-        .onAppear {
-            do {
-                
-                let url = URL(fileURLWithPath: filePath)
-                player = try AVAudioPlayer(contentsOf: url)
-                player?.prepareToPlay()
-                duration = player?.duration ?? 0
-                
-                
-            } catch {
-                print("Error loading audio file: \(error.localizedDescription)")
-            }
-        }
-        .onDisappear {
-            if isPlaying {
-                player?.pause() // Pause the audio if it's currently playing
-                timer?.invalidate()
-                timer = nil
-            }
-        }
-        
-        
-        
+    func formattedTime(time: TimeInterval) -> String {
+        let minutes = Int(time) / 60
+        let seconds = Int(time) % 60
+        return String(format: "%02d:%02d", minutes, seconds)
     }
 
-    
+    var body: some View {
+             
+            VStack {
+                Text("Prompt:")
+                    .bold()
+                    .font(.system(size: 40))
+                    .padding(.top, 50)
+                    .foregroundColor(.white)
+                
+                Spacer().frame(height: 10)
+                
+                Text(input)
+                    .font(.title3)
+                
+                Spacer().frame(height: 20)
+                
+              //  Text(date)
+                    .font(.footnote)
+                Spacer()
+                
+                Button(action: togglePlayPause) {
+                    Image(systemName: isPlaying ? "pause.fill" : "play.fill")
+                        .font(.system(size: 75))
+                        .padding()
+                        .foregroundColor(.white) // Add foreground color modifier
+
+                }
+                
+                if let duration = player?.duration {
+                    HStack {
+                        Text("\(formattedTime(time: currentTime))")
+                        Spacer()
+                        Text("\(formattedTime(time: duration))")
+                    }
+                    .padding(.horizontal)
+                    Slider(value: $currentTime, in: 0...duration, onEditingChanged: { editing in
+                        if !editing {
+                            player?.currentTime = currentTime
+                        }
+                    })
+                    .padding(.horizontal, 40)
+                }
+                
+                Spacer()
+            }
+            .background(MagicBg())
+            .navigationBarBackButtonHidden(true)
+
+            .navigationBarItems(
+                leading: Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                }) {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(.white) // Set foreground color to white
+                },
+                trailing:   Button(action: shareFile) {
+                    Image(systemName: "square.and.arrow.up")
+                        .foregroundColor(.white)
+
+                }
+            )
+            .onAppear {
+                do {
+                    let url = URL(fileURLWithPath: filePath)
+                    player = try AVAudioPlayer(contentsOf: url)
+                    player?.prepareToPlay()
+                    duration = player?.duration ?? 0
+                    
+                } catch {
+                    print("Error loading audio file: \(error.localizedDescription)")
+                }
+            }
+            .onDisappear {
+                if isPlaying {
+                    player?.pause()
+                    timer?.invalidate()
+                    timer = nil
+                }
+            }
+        }
     func togglePlayPause() {
         let impactMed = UIImpactFeedbackGenerator(style: .medium)
         impactMed.impactOccurred()
@@ -97,6 +117,7 @@ struct OfflinePlayerView: View {
             isPlaying.toggle()
         }
     }
+    
     
     func shareFile() {
         let fileURL = URL(fileURLWithPath: filePath)
@@ -128,3 +149,6 @@ struct OfflinePlayerView: View {
         return String(format: "%02d:%02d", minutes, seconds)
     }
 }
+
+
+
