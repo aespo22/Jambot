@@ -10,7 +10,11 @@ import SwiftUI
 
 struct exampleAPIUse: View {
     
-    let api = trackGenerationAPI()
+    
+   
+    
+    
+        let api = trackGenerationAPI()
     @State private var input = ""
     @State private var link = ""
     
@@ -56,14 +60,14 @@ struct exampleAPIUse: View {
         VStack {
             HStack {
                 Spacer().frame(width: 20)
-                Text("Enter your keywords")
+                Text("Enter your Prompt")
                     .font(.system(size: 30, weight: .bold))
                     .foregroundColor(.white)
                 Spacer()
             }
             Spacer().frame(height: 30)
             
-            TextField("Enter song description", text: $input, axis: .vertical)
+            TextField("Type your song description", text: $input, axis: .vertical)
                 .focused($textFieldIsFocused)
                 .onAppear {
                     self.textFieldIsFocused = true
@@ -192,7 +196,7 @@ struct exampleAPIUse: View {
         }.alert(isPresented: $showNoInternetAlert) {
             Alert(
                 title: Text("No internet connection available"),
-                message: Text("AudioFlow is really cool, but you need an internet connection :/"),
+                message: Text("JamBot is really cool, but you need an internet connection :/"),
                 dismissButton: .default(Text("OK"))
             )
         }
