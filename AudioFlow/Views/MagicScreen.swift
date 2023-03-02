@@ -6,12 +6,18 @@
 //
 import SwiftUI
 
+
+
 struct MagicScreen: View {
     @State private var colors = [Color.purple, Color.pink, Color.yellow, Color.mint]
     let gradient = Gradient(colors: [Color.purple,Color.blue, Color.yellow, Color.mint])
     
-    @State private var isAnimating = false
+@State private var isLoading = false
+    
+    var delay: Double = 0 // 1. << don't use state for injectable property
 
+    @State private var scale: CGFloat = 0.5
+    
     var body: some View {
         
         ZStack {
@@ -28,10 +34,72 @@ struct MagicScreen: View {
                     .blur(radius: 20)
             }
             
-            Text("Making some magic...")
-                .font(.title)
-                .fontWeight(.bold)
-                .foregroundColor(.white)
+
+                
+                
+            VStack {
+ 
+                            
+                HStack (alignment: .bottom) {
+                    
+                    Text("Making some magic")
+                                .font(.title)
+                                .fontWeight(.bold)
+                            .foregroundColor(.white)
+                    Spacer().frame(width: 4)
+
+                    VStack {
+                        HStack {
+                            Circle()
+                                .frame(width: 10, height: 10)
+                                .foregroundColor(Color.white)
+                                .scaleEffect(scale)
+                                .animation(
+                                    Animation.easeInOut(duration: 1)
+                                       .repeatForever().delay(delay), value: scale
+                                )
+                                .onAppear {
+                                    self.scale = 1
+                            }
+                            
+                            Spacer().frame(width: 1)
+
+                            Circle()
+                                .frame(width: 10, height: 10)
+                                .foregroundColor(Color.white)
+                                .scaleEffect(scale)
+                                .animation(
+                                    Animation.easeInOut(duration: 1)
+                                       .repeatForever().delay(delay), value: scale
+                                )
+                                .onAppear {
+                                    self.scale = 1
+                                }
+                            Spacer().frame(width: 1)
+                            Circle()
+                                .frame(width: 10, height: 10)
+                                .foregroundColor(Color.white)
+                                .scaleEffect(scale)
+                                .animation(
+                                    Animation.easeInOut(duration: 1)
+                                       .repeatForever().delay(delay), value: scale
+                                )
+                                .onAppear {
+                                    self.scale = 1
+                                }
+                            
+                        }
+                        Spacer().frame(height: 6)
+                    }
+                    
+                    
+                }
+                  
+                    
+                
+            }
+            
+            
             
             
             
@@ -65,6 +133,11 @@ struct MagicScreen: View {
         return Color(hue: hue, saturation: saturation, brightness: brightness)
     }
 }
+
+
+
+
+
 
 struct MagicScreen_Previews: PreviewProvider {
     static var previews: some View {

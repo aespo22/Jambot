@@ -60,7 +60,7 @@ struct exampleAPIUse: View {
         VStack {
             HStack {
                 Spacer().frame(width: 20)
-                Text("Enter your Prompt")
+                Text("Create your song:")
                     .font(.system(size: 30, weight: .bold))
                     .foregroundColor(.white)
                 Spacer()
