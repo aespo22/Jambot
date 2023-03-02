@@ -14,7 +14,7 @@ struct exampleAPIUse: View {
    
     
     
-    let api = trackGenerationAPI()
+        let api = trackGenerationAPI()
     @State private var input = ""
     @State private var link = ""
     

@@ -15,9 +15,14 @@ struct OfflinePlayerView: View {
     
     @State private var timer: Timer? = nil
     
-    
+    func formattedTime(time: TimeInterval) -> String {
+        let minutes = Int(time) / 60
+        let seconds = Int(time) % 60
+        return String(format: "%02d:%02d", minutes, seconds)
+    }
+
     var body: some View {
-        
+         
         VStack {
             Text("Keywords:")
                 .bold()
@@ -26,7 +31,6 @@ struct OfflinePlayerView: View {
                 .foregroundColor(.gray)
             
             Spacer().frame(height: 10)
-            
             
             Text(input)
                 .font(.title)
@@ -42,15 +46,26 @@ struct OfflinePlayerView: View {
                     .font(.system(size: 100))
                     .padding()
             }
-            Spacer()
-            HStack (alignment: .center){
-                Text(formatTimeInterval(currentTime))
-                Slider(value: $currentTime, in: 0...duration, onEditingChanged: sliderEditingChanged)
-                    .accentColor(.blue)
-                Text(formatTimeInterval(duration))
+            
+            if let duration = player?.duration {
+                HStack {
+                    Text("\(formattedTime(time: currentTime))")
+                    Spacer()
+                    Text("\(formattedTime(time: duration))")
+                }
+                .padding(.horizontal)
+                Slider(value: $currentTime, in: 0...duration, onEditingChanged: { editing in
+                    if !editing {
+                        player?.currentTime = currentTime
+                    }
+                })
+                .padding(.horizontal, 40)
             }
+            
             Spacer()
         }
+        .background(MagicBg())
+     
         .navigationBarItems(trailing:
             Button(action: shareFile) {
                 Image(systemName: "square.and.arrow.up")
@@ -58,12 +73,10 @@ struct OfflinePlayerView: View {
         )
         .onAppear {
             do {
-                
                 let url = URL(fileURLWithPath: filePath)
                 player = try AVAudioPlayer(contentsOf: url)
                 player?.prepareToPlay()
                 duration = player?.duration ?? 0
-                
                 
             } catch {
                 print("Error loading audio file: \(error.localizedDescription)")
@@ -71,17 +84,13 @@ struct OfflinePlayerView: View {
         }
         .onDisappear {
             if isPlaying {
-                player?.pause() // Pause the audio if it's currently playing
+                player?.pause()
                 timer?.invalidate()
                 timer = nil
             }
         }
-        
-        
-        
     }
 
-    
     func togglePlayPause() {
         let impactMed = UIImpactFeedbackGenerator(style: .medium)
         impactMed.impactOccurred()
@@ -128,3 +137,5 @@ struct OfflinePlayerView: View {
         return String(format: "%02d:%02d", minutes, seconds)
     }
 }
+
+
