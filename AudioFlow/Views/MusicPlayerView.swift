@@ -87,11 +87,7 @@ struct MusicPlayerView: View {
     
     
     var body: some View {
-        
-        
-        
-        
-        
+ 
         VStack {
             Text("Prompt:")
                 .bold()
@@ -210,8 +206,6 @@ struct MusicPlayerView: View {
         return formatter.string(from: date)
     }
 }
-
-
 
 
 

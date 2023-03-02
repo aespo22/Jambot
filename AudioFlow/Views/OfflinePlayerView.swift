@@ -83,11 +83,8 @@ struct OfflinePlayerView: View {
                 Image(systemName: "chevron.left")
                     .foregroundColor(.primary) // Set foreground color to white
             },
-            trailing:   Button(action: shareFile) {
-                Image(systemName: "square.and.arrow.up")
-                    .foregroundColor(.primary)
-                
-            }
+            trailing:   ShareLink(item: URL(fileURLWithPath: filePath)).foregroundColor(.primary)
+
         )
         .onAppear {
             do {
