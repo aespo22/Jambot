@@ -60,14 +60,14 @@ struct exampleAPIUse: View {
         VStack {
             HStack {
                 Spacer().frame(width: 20)
-                Text("Enter your keywords")
+                Text("Enter your Prompt")
                     .font(.system(size: 30, weight: .bold))
                     .foregroundColor(.white)
                 Spacer()
             }
             Spacer().frame(height: 30)
             
-            TextField("Enter song description", text: $input, axis: .vertical)
+            TextField("Type your song description", text: $input, axis: .vertical)
                 .focused($textFieldIsFocused)
                 .onAppear {
                     self.textFieldIsFocused = true
