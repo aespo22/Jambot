@@ -12,6 +12,11 @@ class SoundManager: ObservableObject {
     
     init(){
         UINavigationBar.setAnimationsEnabled(false)
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback)
+        } catch(let error) {
+            print(error.localizedDescription)
+        }
     }
     
     var audioPlayer: AVPlayer?
