@@ -89,7 +89,8 @@ struct OfflinePlayerView: View {
         .onAppear {
             
             do {
-                AVAudioSession.sharedInstance().setCategory(.playback)
+                try AVAudioSession.sharedInstance().setCategory(.playback)
+
                 let url = URL(fileURLWithPath: filePath)
                 player = try AVAudioPlayer(contentsOf: url)
                 player?.prepareToPlay()
