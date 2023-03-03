@@ -13,7 +13,7 @@ struct OfflinePlayerView: View {
     @State private var duration: TimeInterval = 0
     
     @Environment(\.presentationMode) var presentationMode
-
+    
     @State private var timer: Timer? = nil
     
     func formattedTime(time: TimeInterval) -> String {
@@ -21,87 +21,90 @@ struct OfflinePlayerView: View {
         let seconds = Int(time) % 60
         return String(format: "%02d:%02d", minutes, seconds)
     }
-
+    
     var body: some View {
-             
-            VStack {
-                Text("Prompt:")
-                    .bold()
-                    .font(.system(size: 40))
-                    .padding(.top, 50)
+        
+        VStack {
+            Text("Prompt:")
+                .bold()
+                .font(.title3)
+                .padding(.top, 50)
+                .foregroundColor(.white)
+            
+            Spacer().frame(height: 10)
+            
+            HStack {
+                Text(input)
+                    .font(.title)
+                    .multilineTextAlignment(.center)
+            }.padding(.horizontal, 50)
+            
+            Spacer().frame(height: 20)
+            
+            Text(date)
+                .font(.footnote)
+            
+            Spacer()
+            
+            
+            Button(action: togglePlayPause) {
+                Image(systemName: isPlaying ? "pause.fill" : "play.fill")
+                    .font(.system(size: 65))
+                    .padding()
                     .foregroundColor(.white)
                 
-                Spacer().frame(height: 10)
-                
-                Text(input)
-                    .font(.title3)
-                
-                Spacer().frame(height: 20)
-                
-              //  Text(date)
-                    .font(.footnote)
-                Spacer()
-                
-                Button(action: togglePlayPause) {
-                    Image(systemName: isPlaying ? "pause.fill" : "play.fill")
-                        .font(.system(size: 75))
-                        .padding()
-                        .foregroundColor(.white) // Add foreground color modifier
-
+            }
+            
+            if let duration = player?.duration {
+                HStack {
+                    Text("\(formattedTime(time: currentTime))")
+                    Spacer()
+                    Text("\(formattedTime(time: duration))")
                 }
+                .padding(.horizontal)
                 
-                if let duration = player?.duration {
-                    HStack {
-                        Text("\(formattedTime(time: currentTime))")
-                        Spacer()
-                        Text("\(formattedTime(time: duration))")
+                Slider(value: $currentTime, in: 0...duration, onEditingChanged: { editing in
+                    if !editing {
+                        player?.currentTime = currentTime
                     }
-                    .padding(.horizontal)
-                    Slider(value: $currentTime, in: 0...duration, onEditingChanged: { editing in
-                        if !editing {
-                            player?.currentTime = currentTime
-                        }
-                    })
-                    .padding(.horizontal, 40)
-                }
+                })
+                .padding(.horizontal, 40)
+            }
+            
+            Spacer()
+        }
+        .background(MagicBg())
+        .navigationBarBackButtonHidden(true)
+        
+        .navigationBarItems(
+            leading: Button(action: {
+                presentationMode.wrappedValue.dismiss()
+            }) {
+                Image(systemName: "chevron.left")
+                    .foregroundColor(.primary) // Set foreground color to white
+            },
+            trailing:   ShareLink(item: URL(fileURLWithPath: filePath)).foregroundColor(.primary)
+
+        )
+        .onAppear {
+            do {
+                let url = URL(fileURLWithPath: filePath)
+                player = try AVAudioPlayer(contentsOf: url)
+                player?.prepareToPlay()
+                duration = player?.duration ?? 0
                 
-                Spacer()
-            }
-            .background(MagicBg())
-            .navigationBarBackButtonHidden(true)
-
-            .navigationBarItems(
-                leading: Button(action: {
-                    presentationMode.wrappedValue.dismiss()
-                }) {
-                    Image(systemName: "chevron.left")
-                        .foregroundColor(.white) // Set foreground color to white
-                },
-                trailing:   Button(action: shareFile) {
-                    Image(systemName: "square.and.arrow.up")
-                        .foregroundColor(.white)
-
-                }
-            )
-            .onAppear {
-                do {
-                    let url = URL(fileURLWithPath: filePath)
-                    player = try AVAudioPlayer(contentsOf: url)
-                    player?.prepareToPlay()
-                    duration = player?.duration ?? 0
-                    
-                } catch {
-                    print("Error loading audio file: \(error.localizedDescription)")
-                }
-            }
-            .onDisappear {
-                if isPlaying {
-                    player?.pause()
-                    timer?.invalidate()
-                    timer = nil
-                }
+            } catch {
+                print("Error loading audio file: \(error.localizedDescription)")
             }
         }
+        .onDisappear {
+            if isPlaying {
+                player?.pause()
+                timer?.invalidate()
+                timer = nil
+            }
+        }
+    }
     func togglePlayPause() {
         let impactMed = UIImpactFeedbackGenerator(style: .medium)
         impactMed.impactOccurred()
@@ -143,11 +146,7 @@ struct OfflinePlayerView: View {
         }
     }
     
-    func formatTimeInterval(_ timeInterval: TimeInterval) -> String {
-        let minutes = Int(timeInterval / 60)
-        let seconds = Int(timeInterval) % 60
-        return String(format: "%02d:%02d", minutes, seconds)
-    }
+    
 }
 
 

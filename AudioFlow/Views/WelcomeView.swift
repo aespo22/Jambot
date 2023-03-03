@@ -4,8 +4,42 @@
 //
 //  Created by Antonio Esposito on 21/02/23.
 //
-
 import SwiftUI
+import UIKit
+
+class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+
+    var window: UIWindow?
+
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        
+        // Check if the flag is set
+        let defaults = UserDefaults.standard
+        let hasShownBoardView = defaults.bool(forKey: "hasShownBoardView")
+        
+        if !hasShownBoardView {
+            // Show the board view and set the flag
+            defaults.set(true, forKey: "hasShownBoardView")
+            let exampleAPIUse = WelcomeView()
+            if let windowScene = scene as? UIWindowScene {
+                let window = UIWindow(windowScene: windowScene)
+                window.rootViewController = UIHostingController(rootView: exampleAPIUse)
+                self.window = window
+                window.makeKeyAndVisible()
+            }
+        } else {
+            // Show the app's main view
+            let contentView = HistoryView()
+            if let windowScene = scene as? UIWindowScene {
+                let window = UIWindow(windowScene: windowScene)
+                window.rootViewController = UIHostingController(rootView: contentView)
+                self.window = window
+                window.makeKeyAndVisible()
+            }
+        }
+    }
+}
+
 struct WelcomeView: View {
     var body: some View {
         NavigationView {
@@ -42,7 +76,6 @@ struct WelcomeView: View {
         }
     }
 }
-
 
 struct WelcomeView_Previews: PreviewProvider {
     static var previews: some View {

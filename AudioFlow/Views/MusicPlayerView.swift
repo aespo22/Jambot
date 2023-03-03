@@ -84,99 +84,106 @@ struct MusicPlayerView: View {
     
     
     let downloadManager = DownloadManager()
-
+    
     
     var body: some View {
-        
-        
-        
-        
-        
+ 
         VStack {
-            Spacer().frame(height: 30)
+            Text("Prompt:")
+                .bold()
+                .font(.title3)
+                .padding(.top, 50)
+                .foregroundColor(.white)
+            
+            
+            Spacer().frame(height: 10)
             
             HStack {
-                Spacer()
                 Text(input)
-                    .font(.title2)
-                .padding()
+                    .font(.title)
+                    .multilineTextAlignment(.center)
                 
-                Spacer()
-
-            }.padding(.horizontal, 30)
+                
+            }.padding(.horizontal, 50)
+            
+            Spacer().frame(height: 20)
+            
+            //            Text(date)
+            //                .font(.footnote)
+            
+            
             
             Spacer()
             
-            // ZStack to position the play button and slider
-            ZStack {
-                VStack {
-                    Spacer()
-                    Image(systemName: isPlaying ? "pause.fill" : "play.fill")
-                        .font(.system(size: 75))
-                        .onTapGesture {
-                            if isPlaying {
-                                let impactMed = UIImpactFeedbackGenerator(style: .medium)
-                                impactMed.impactOccurred()
-                                soundManager.pause()
-                            } else {
-                                let impactMed = UIImpactFeedbackGenerator(style: .medium)
-                                impactMed.impactOccurred()
-                                soundManager.playSound(sound: officialLink)
-                                soundManager.startUpdatingCurrentTime(progressHandler: { currentTime in
-                                    self.currentTime = currentTime
-                                })
-                                soundManager.play()
-                            }
-                            isPlaying.toggle()
-                        }
-                    Spacer()
+            Button(action: {
+                if isPlaying {
+                    let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                    impactMed.impactOccurred()
+                    soundManager.pause()
+                } else {
+                    let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                    impactMed.impactOccurred()
+                    soundManager.playSound(sound: officialLink)
+                    soundManager.startUpdatingCurrentTime(progressHandler: { currentTime in
+                        self.currentTime = currentTime
+                    })
+                    soundManager.play()
                 }
-                .padding(.horizontal, 40)
-                .padding(.bottom, 200) // Adjust the padding to position the play button where you want it
+                isPlaying.toggle()
                 
-                // Slider and duration text
-                VStack {
+            }) {
+                Image(systemName: isPlaying ? "pause.fill" : "play.fill")
+                    .font(.system(size: 65))
+                    .padding()
+                    .foregroundColor(.white)
+                
+            }
+            
+            
+            if let duration = soundManager.getDuration() {
+                HStack {
+                    Text("\(formattedTime(time: currentTime))")
                     Spacer()
-                    if let duration = soundManager.getDuration() {
-                        HStack {
-                            Text("\(formattedTime(time: currentTime))")
-                            Spacer()
-                            Text("\(formattedTime(time: duration))")
-                        }
-                        .padding(.horizontal)
-                        Slider(value: $currentTime, in: 0...duration, onEditingChanged: { editing in
-                            if !editing {
-                                soundManager.seekTo(time: currentTime)
-                            }
-                        })
-                        .padding(.horizontal, 40)
-                    }
+                    Text("\(formattedTime(time: duration))")
                 }
+                .padding(.horizontal)
+                Slider(value: $currentTime, in: 0...duration, onEditingChanged: { editing in
+                    if !editing {
+                        soundManager.seekTo(time: currentTime)
+                    }
+                })
+                .padding(.horizontal, 40)
+            }else{
+                //                    this is purely so that elements don't move around
+                HStack {
+                    Text("Start")
+                    Spacer()
+                    Text("End")
+                }
+                .padding(.horizontal)
+                Slider(value: $currentTime, in: 0...0)
+                    .padding(.horizontal, 40)
             }
             
             Spacer()
         }
         .background(MagicBg())
         .navigationBarBackButtonHidden(true)
-        
-        .navigationTitle("Keywords:")
-        .zIndex(1)
         .onDisappear {
             let impactLight = UIImpactFeedbackGenerator(style: .light)
             impactLight.impactOccurred()
             
             soundManager.pause()
             
-        }
-        .navigationBarItems(
+        }.navigationBarItems(
             leading: NavigationLink(destination: HistoryView()) {
-                Image(systemName: "arrow.left")
-                    .font(.title2)
+                Image(systemName: "chevron.left")
+                   
                     .foregroundColor(.primary)
                 
                 
             },
-            //this now going to the history view, but it has to be implemented a save function
+            
             
             trailing: NavigationLink(destination: HistoryView()) {
                 Text(saveText)
@@ -199,8 +206,6 @@ struct MusicPlayerView: View {
         return formatter.string(from: date)
     }
 }
-
-
 
 
 
