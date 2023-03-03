@@ -133,7 +133,7 @@ struct MusicPlayerView: View {
                 
             }) {
                 Image(systemName: isPlaying ? "pause.fill" : "play.fill")
-                    .font(.system(size: 75))
+                    .font(.system(size: 65))
                     .padding()
                     .foregroundColor(.white)
                 
@@ -177,8 +177,8 @@ struct MusicPlayerView: View {
             
         }.navigationBarItems(
             leading: NavigationLink(destination: HistoryView()) {
-                Image(systemName: "arrow.left")
-                    .font(.title2)
+                Image(systemName: "chevron.left")
+                   
                     .foregroundColor(.primary)
                 
                 

@@ -51,7 +51,7 @@ struct MagicScreen: View {
                     VStack {
                         HStack {
                             Circle()
-                                .frame(width: 10, height: 10)
+                                .frame(width: 7, height: 7)
                                 .foregroundColor(Color.white)
                                 .scaleEffect(scale)
                                 .animation(
@@ -65,23 +65,23 @@ struct MagicScreen: View {
                             Spacer().frame(width: 1)
 
                             Circle()
-                                .frame(width: 10, height: 10)
+                                .frame(width: 7, height: 7)
                                 .foregroundColor(Color.white)
                                 .scaleEffect(scale)
                                 .animation(
-                                    Animation.easeInOut(duration: 1)
+                                    Animation.easeInOut(duration: 2)
                                        .repeatForever().delay(delay), value: scale
                                 )
                                 .onAppear {
                                     self.scale = 1
                                 }
-                            Spacer().frame(width: 1)
+                            Spacer().frame(width: 3)
                             Circle()
-                                .frame(width: 10, height: 10)
+                                .frame(width: 7, height: 7)
                                 .foregroundColor(Color.white)
                                 .scaleEffect(scale)
                                 .animation(
-                                    Animation.easeInOut(duration: 1)
+                                    Animation.easeInOut(duration: 3)
                                        .repeatForever().delay(delay), value: scale
                                 )
                                 .onAppear {
