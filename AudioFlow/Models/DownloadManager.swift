@@ -3,7 +3,7 @@ import Foundation
 import CoreData
 
 class DownloadManager {
-    func saveMp3ToPhone(input: String, url: URL) {
+    func saveMp3ToPhone(input: String, url: URL, completion: @escaping () -> Void) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd-HH-mm"
         let dateStr = dateFormatter.string(from: Date())
@@ -30,6 +30,8 @@ class DownloadManager {
                 do {
                     try FileManager.default.copyItem(at: tempLocalUrl, to: destinationUrl)
                     print("File saved at \(destinationUrl)")
+                    completion()
+
                 } catch (let writeError) {
                     print("Error creating a file \(destinationUrl) : \(writeError)")
                 }

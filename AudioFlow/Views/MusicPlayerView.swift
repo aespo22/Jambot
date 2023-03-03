@@ -84,6 +84,8 @@ struct MusicPlayerView: View {
     
     @ObservedObject var filesManager: FilesManager
     
+    @State var showSavedAlert = false
+    
     
     let downloadManager = DownloadManager()
     
@@ -93,122 +95,155 @@ struct MusicPlayerView: View {
         
         
         NavigationStack {
-            VStack {
-                
-                Text("Prompt:")
-                    .bold()
-                    .font(.title3)
-                    .padding(.top, 50)
-                    .foregroundColor(.white)
-                
-                
-                Spacer().frame(height: 10)
-                
-                HStack {
-                    Text(input)
-                        .font(.title)
-                        .multilineTextAlignment(.center)
+            ZStack {
+                VStack {
                     
-                    
-                }.padding(.horizontal, 50)
-                
-                Spacer().frame(height: 20)
-                
-                //            Text(date)
-                //                .font(.footnote)
-                
-                
-                
-                Spacer()
-                
-                Button(action: {
-                    if isPlaying {
-                        let impactMed = UIImpactFeedbackGenerator(style: .medium)
-                        impactMed.impactOccurred()
-                        soundManager.pause()
-                    } else {
-                        let impactMed = UIImpactFeedbackGenerator(style: .medium)
-                        impactMed.impactOccurred()
-                        soundManager.playSound(sound: officialLink)
-                        soundManager.startUpdatingCurrentTime(progressHandler: { currentTime in
-                            self.currentTime = currentTime
-                        })
-                        soundManager.play()
-                    }
-                    isPlaying.toggle()
-                    
-                }) {
-                    Image(systemName: isPlaying ? "pause.fill" : "play.fill")
-                        .font(.system(size: 65))
-                        .padding()
+                    Text("Prompt:")
+                        .bold()
+                        .font(.title3)
+                        .padding(.top, 50)
                         .foregroundColor(.white)
                     
-                }
-                
-                
-                if let duration = soundManager.getDuration() {
-                    HStack {
-                        Text("\(formattedTime(time: currentTime))")
-                        Spacer()
-                        Text("\(formattedTime(time: duration))")
-                    }
-                    .padding(.horizontal)
-                    Slider(value: $currentTime, in: 0...duration, onEditingChanged: { editing in
-                        if !editing {
-                            soundManager.seekTo(time: currentTime)
-                        }
-                    })
-                    .padding(.horizontal, 40)
-                }else{
+                    
+                    Spacer().frame(height: 10)
                     
                     HStack {
-                        Text("Start")
-                        Spacer()
-                        Text("End")
-                    }
-                    .padding(.horizontal)
-                    Slider(value: $currentTime, in: 0...0)
-                        .padding(.horizontal, 40)
-                }
-                
-                Spacer()
-            }
-            .background(MagicBg())
-            .navigationBarBackButtonHidden(true)
-            .onDisappear {
-                let impactLight = UIImpactFeedbackGenerator(style: .light)
-                impactLight.impactOccurred()
-                
-                soundManager.pause()
-                
-            }
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction ) {
+                        Text(input)
+                            .font(.title)
+                            .multilineTextAlignment(.center)
+                        
+                        
+                    }.padding(.horizontal, 50)
+                    
+                    Spacer().frame(height: 20)
+                    
+                    //            Text(date)
+                    //                .font(.footnote)
+                    
+                    
+                    
+                    Spacer()
                     
                     Button(action: {
-                        filesManager.refreshFiles()
-                        dismiss()
-                        
-                    }, label: {
-                        Image(systemName: "xmark").foregroundColor(.primary)
-                            .font(.headline)
-                    })
-                    
-                }
-                
-                ToolbarItem(placement: .confirmationAction ) {
-                    
-                    Text(saveText)
-                        .foregroundColor(.primary)
-                        .onTapGesture {
-                            saveText = "Saved Song!"
-                            downloadManager.saveMp3ToPhone(input: input, url: URL(string: officialLink)!)
-                            filesManager.refreshFiles()
-                            
+                        if isPlaying {
+                            let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                            impactMed.impactOccurred()
+                            soundManager.pause()
+                        } else {
+                            let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                            impactMed.impactOccurred()
+                            soundManager.playSound(sound: officialLink)
+                            soundManager.startUpdatingCurrentTime(progressHandler: { currentTime in
+                                self.currentTime = currentTime
+                            })
+                            soundManager.play()
                         }
+                        isPlaying.toggle()
+                        
+                    }) {
+                        Image(systemName: isPlaying ? "pause.fill" : "play.fill")
+                            .font(.system(size: 65))
+                            .padding()
+                            .foregroundColor(.white)
+                        
+                    }
+                    
+                    
+                    if let duration = soundManager.getDuration() {
+                        HStack {
+                            Text("\(formattedTime(time: currentTime))")
+                            Spacer()
+                            Text("\(formattedTime(time: duration))")
+                        }
+                        .padding(.horizontal)
+                        Slider(value: $currentTime, in: 0...duration, onEditingChanged: { editing in
+                            if !editing {
+                                soundManager.seekTo(time: currentTime)
+                            }
+                        })
+                        .padding(.horizontal, 40)
+                    }else{
+                        
+                        HStack {
+                            Text("Start")
+                            Spacer()
+                            Text("End")
+                        }
+                        .padding(.horizontal)
+                        Slider(value: $currentTime, in: 0...0)
+                            .padding(.horizontal, 40)
+                    }
+                    
+                    Spacer()
+                }
+                .background(MagicBg())
+                .navigationBarBackButtonHidden(true)
+                .onDisappear {
+                    let impactLight = UIImpactFeedbackGenerator(style: .light)
+                    impactLight.impactOccurred()
+                    
+                    soundManager.pause()
                     
                 }
-                
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction ) {
+                        
+                        Button(action: {
+                            dismiss()
+                            
+                        }, label: {
+                            Image(systemName: "xmark").foregroundColor(.primary)
+                                .font(.headline)
+                        })
+                        
+                    }
+                    
+                    ToolbarItem(placement: .confirmationAction ) {
+                        
+                        Text(saveText)
+                            .foregroundColor(.primary)
+                            .onTapGesture {
+                                saveText = "Saving song..."
+                                
+                                downloadManager.saveMp3ToPhone(input: input, url: URL(string: officialLink)!) {
+                                    // this code will be executed only when the saveMp3ToPhone function is done
+                                    filesManager.refreshFiles()
+                                    self.showSavedAlert = true
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                                        self.showSavedAlert = false
+                                    }
+                                    saveText = "Saved"
+                                }
+                                
+                            }
+                        
+                    }
+                    
+                }
+                if showSavedAlert {
+                    RoundedRectangle(cornerRadius: 16)
+                        .foregroundColor(Color.black)
+                        .frame(width: 250, height: 250)
+                        .overlay(
+                            VStack {
+                                Spacer()
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(.primary)
+                                    .font(.largeTitle)
+                                Spacer().frame(height: 10)
+                                
+                                Text("Song Saved")
+                                    .font(.largeTitle)
+                                    .bold()
+                                Spacer().frame(height: 10)
+                                Text("Play it anytime on your History page.")
+                                    .font(.body)
+                                    .multilineTextAlignment(.center)
+                                Spacer()
+                            }
+                        ).opacity(0.95)
+                    
+                }
             }
         }
     }
