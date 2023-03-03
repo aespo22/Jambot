@@ -18,7 +18,7 @@ struct MagicView: View {
         ZStack {
             LinearGradient(gradient: gradient, startPoint: .top, endPoint: .bottom)
                 .edgesIgnoringSafeArea(.all)
-                
+            
             ForEach(colors.indices, id: \.self) { index in
                 Circle()
                     .fill(getGradient(color: colors[index]))
@@ -46,10 +46,10 @@ struct MagicView: View {
     func getGradient(color: Color) -> LinearGradient {
         let start = Color.white.opacity(0.05)
         let end = Color.white.opacity(0.05)
-
+        
         return LinearGradient(gradient: Gradient(colors: [start, color.opacity(1), end]), startPoint: .top, endPoint: .bottom)
     }
-
+    
     func getNewColor() -> Color {
         let hue = Double.random(in: 2...10)
         let saturation = Double.random(in: 1...10)

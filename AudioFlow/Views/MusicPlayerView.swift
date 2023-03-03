@@ -10,10 +10,6 @@ import AVFoundation
 
 class SoundManager: ObservableObject {
     
-    
-    
-    
-    
     init(){
         UINavigationBar.setAnimationsEnabled(false)
     }
@@ -82,121 +78,139 @@ struct MusicPlayerView: View {
     @Binding var officialLink: String
     @Binding var input: String
     
+    //for dismissing to history screen
+    @Environment(\.dismiss) var dismiss
+    
+    
+    @ObservedObject var filesManager: FilesManager
+    
     
     let downloadManager = DownloadManager()
     
     
+    
     var body: some View {
- 
-        VStack {
-            Text("Prompt:")
-                .bold()
-                .font(.title3)
-                .padding(.top, 50)
-                .foregroundColor(.white)
-            
-            
-            Spacer().frame(height: 10)
-            
-            HStack {
-                Text(input)
-                    .font(.title)
-                    .multilineTextAlignment(.center)
+        
+        
+        NavigationStack {
+            VStack {
                 
-                
-            }.padding(.horizontal, 50)
-            
-            Spacer().frame(height: 20)
-            
-            //            Text(date)
-            //                .font(.footnote)
-            
-            
-            
-            Spacer()
-            
-            Button(action: {
-                if isPlaying {
-                    let impactMed = UIImpactFeedbackGenerator(style: .medium)
-                    impactMed.impactOccurred()
-                    soundManager.pause()
-                } else {
-                    let impactMed = UIImpactFeedbackGenerator(style: .medium)
-                    impactMed.impactOccurred()
-                    soundManager.playSound(sound: officialLink)
-                    soundManager.startUpdatingCurrentTime(progressHandler: { currentTime in
-                        self.currentTime = currentTime
-                    })
-                    soundManager.play()
-                }
-                isPlaying.toggle()
-                
-            }) {
-                Image(systemName: isPlaying ? "pause.fill" : "play.fill")
-                    .font(.system(size: 65))
-                    .padding()
+                Text("Prompt:")
+                    .bold()
+                    .font(.title3)
+                    .padding(.top, 50)
                     .foregroundColor(.white)
                 
-            }
-            
-            
-            if let duration = soundManager.getDuration() {
+                
+                Spacer().frame(height: 10)
+                
                 HStack {
-                    Text("\(formattedTime(time: currentTime))")
-                    Spacer()
-                    Text("\(formattedTime(time: duration))")
-                }
-                .padding(.horizontal)
-                Slider(value: $currentTime, in: 0...duration, onEditingChanged: { editing in
-                    if !editing {
-                        soundManager.seekTo(time: currentTime)
+                    Text(input)
+                        .font(.title)
+                        .multilineTextAlignment(.center)
+                    
+                    
+                }.padding(.horizontal, 50)
+                
+                Spacer().frame(height: 20)
+                
+                //            Text(date)
+                //                .font(.footnote)
+                
+                
+                
+                Spacer()
+                
+                Button(action: {
+                    if isPlaying {
+                        let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                        impactMed.impactOccurred()
+                        soundManager.pause()
+                    } else {
+                        let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                        impactMed.impactOccurred()
+                        soundManager.playSound(sound: officialLink)
+                        soundManager.startUpdatingCurrentTime(progressHandler: { currentTime in
+                            self.currentTime = currentTime
+                        })
+                        soundManager.play()
                     }
-                })
-                .padding(.horizontal, 40)
-            }else{
-                //                    this is purely so that elements don't move around
-                HStack {
-                    Text("Start")
-                    Spacer()
-                    Text("End")
+                    isPlaying.toggle()
+                    
+                }) {
+                    Image(systemName: isPlaying ? "pause.fill" : "play.fill")
+                        .font(.system(size: 65))
+                        .padding()
+                        .foregroundColor(.white)
+                    
                 }
-                .padding(.horizontal)
-                Slider(value: $currentTime, in: 0...0)
+                
+                
+                if let duration = soundManager.getDuration() {
+                    HStack {
+                        Text("\(formattedTime(time: currentTime))")
+                        Spacer()
+                        Text("\(formattedTime(time: duration))")
+                    }
+                    .padding(.horizontal)
+                    Slider(value: $currentTime, in: 0...duration, onEditingChanged: { editing in
+                        if !editing {
+                            soundManager.seekTo(time: currentTime)
+                        }
+                    })
                     .padding(.horizontal, 40)
-            }
-            
-            Spacer()
-        }
-        .background(MagicBg())
-        .navigationBarBackButtonHidden(true)
-        .onDisappear {
-            let impactLight = UIImpactFeedbackGenerator(style: .light)
-            impactLight.impactOccurred()
-            
-            soundManager.pause()
-            
-        }.navigationBarItems(
-            leading: NavigationLink(destination: HistoryView()) {
-                Image(systemName: "chevron.left")
-                   
-                    .foregroundColor(.primary)
-                
-                
-            },
-            
-            
-            trailing: NavigationLink(destination: HistoryView()) {
-                Text(saveText)
-                    .foregroundColor(.primary)
-                    .onTapGesture {
-                        saveText = "Saved!"
-                        downloadManager.saveMp3ToPhone(input: input, url: URL(string: officialLink)!)
+                }else{
+                    
+                    HStack {
+                        Text("Start")
+                        Spacer()
+                        Text("End")
                     }
+                    .padding(.horizontal)
+                    Slider(value: $currentTime, in: 0...0)
+                        .padding(.horizontal, 40)
+                }
+                
+                Spacer()
             }
-            
-        )
-        
-        
+            .background(MagicBg())
+            .navigationBarBackButtonHidden(true)
+            .onDisappear {
+                let impactLight = UIImpactFeedbackGenerator(style: .light)
+                impactLight.impactOccurred()
+                
+                soundManager.pause()
+                
+            }
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction ) {
+                    
+                    Button(action: {
+                        filesManager.refreshFiles()
+                        dismiss()
+                        
+                    }, label: {
+                        Image(systemName: "xmark").foregroundColor(.primary)
+                            .font(.headline)
+                    })
+                    
+                }
+                
+                ToolbarItem(placement: .confirmationAction ) {
+                    
+                    Text(saveText)
+                        .foregroundColor(.primary)
+                        .onTapGesture {
+                            saveText = "Saved Song!"
+                            downloadManager.saveMp3ToPhone(input: input, url: URL(string: officialLink)!)
+                            filesManager.refreshFiles()
+                            
+                        }
+                    
+                }
+                
+            }
+        }
     }
     
     private func formattedTime(time: Double) -> String {
@@ -210,8 +224,11 @@ struct MusicPlayerView: View {
 
 
 struct MusicPlayerView_Previews: PreviewProvider {
+    
+    
     static var previews: some View {
-        MusicPlayerView(officialLink: .constant("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"), input: .constant("hello grinder baby back baby back wayyyy I think this does not work anymoreeee baby yearhhhss"))
+        MusicPlayerView(officialLink: .constant("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"), input: .constant("hello grinder baby back baby back wayyyy I think this does not work anymoreeee baby yearhhhss"), filesManager: FilesManager())
     }
 }
+
 

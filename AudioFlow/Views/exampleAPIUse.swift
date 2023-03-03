@@ -11,12 +11,11 @@ import SwiftUI
 struct exampleAPIUse: View {
     
     
-   
     
-    
-        let api = trackGenerationAPI()
+    let api = trackGenerationAPI()
     @State private var input = ""
     @State private var link = ""
+    
     
     let pat = "YW50b25pb19hbmRfZnJpZW5kcy4xODU1MTA5Ny5lMWQwODBkNjQ5M2EyZmNkZGE3Yjg3ZjEyYjE4YTdiZmU4OWM1NGQ1LjEuMw.b952a32df79024eadc42b52091ae06a28e403a256abf0a6a3fe9538a6181842a"
     let duration = 60
@@ -26,12 +25,15 @@ struct exampleAPIUse: View {
     
     let networkMonitor = NetworkMonitor()
     @State private var showNoInternetAlert = false
-
+    
     @FocusState private var textFieldIsFocused: Bool
-
+    
     //to handle modal window closure
     @Environment(\.dismiss) var dismiss
-
+    
+    @ObservedObject var filesManager: FilesManager
+    
+    
     
     var body: some View {
         
@@ -53,7 +55,7 @@ struct exampleAPIUse: View {
                     }
                 }
         case .player:
-            MusicPlayerView(officialLink: .constant(link), input: .constant(input))
+            MusicPlayerView(officialLink: .constant(link), input: .constant(input), filesManager: filesManager)
             
             
         }
@@ -68,7 +70,7 @@ struct exampleAPIUse: View {
                 Button(action: {dismiss()}, label: {
                     Image(systemName: "xmark").foregroundColor(.primary)
                         .font(.headline)
-
+                    
                 })
                 Spacer().frame(width: 30)
             }
@@ -86,7 +88,7 @@ struct exampleAPIUse: View {
                 .focused($textFieldIsFocused)
                 .onAppear {
                     self.textFieldIsFocused = true
-                  
+                    
                 }
                 .frame(height: 48)
                 .padding(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 50))
@@ -113,7 +115,7 @@ struct exampleAPIUse: View {
                     },
                     alignment: .trailing
                 )
-
+            
             
             Spacer().frame(height: 16)
             
@@ -124,8 +126,8 @@ struct exampleAPIUse: View {
                         
                         
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-
-
+                        
+                        
                         let impactMed = UIImpactFeedbackGenerator(style: .medium)
                         impactMed.impactOccurred()
                         
@@ -133,7 +135,7 @@ struct exampleAPIUse: View {
                         
                         if networkMonitor.isConnected {
                             currentView = .magicScreen
-
+                            
                             api.generateTrack(input: input, pat: pat, duration: duration) { result in
                                 switch result {
                                 case .success(let response):
@@ -146,7 +148,7 @@ struct exampleAPIUse: View {
                                     NSLog("!!! LINK: "+self.link)
                                 case .failure(let error):
                                     currentView = .inputView
-
+                                    
                                     self.responseText = error.localizedDescription
                                 }
                             }
@@ -154,13 +156,13 @@ struct exampleAPIUse: View {
                         } else {
                             
                             showNoInternetAlert = true
-
+                            
                         }
                         
                         
                         
-
-
+                        
+                        
                     }, label: {
                         HStack {
                             Image(systemName: "arrow.right")
@@ -204,12 +206,12 @@ struct exampleAPIUse: View {
                     
                 }
             }.padding(.horizontal, 20)
-                
+            
             Spacer()
-
             
             
-           
+            
+            
         }
         .alert(isPresented: $showNoInternetAlert) {
             Alert(
@@ -218,8 +220,8 @@ struct exampleAPIUse: View {
                 dismissButton: .default(Text("OK"))
             )
         }
-        .navigationBarItems(leading: Button(action: {dismiss()}, label: {Image(systemName: "xmark").foregroundColor(.white)}))
-
+        
+        
     }
 }
 
@@ -231,6 +233,6 @@ enum CurrentView {
 
 struct API_Previews: PreviewProvider {
     static var previews: some View {
-        exampleAPIUse()
+        exampleAPIUse(filesManager: FilesManager())
     }
 }

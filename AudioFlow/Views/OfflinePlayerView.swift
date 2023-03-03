@@ -84,7 +84,7 @@ struct OfflinePlayerView: View {
                     .foregroundColor(.primary) // Set foreground color to white
             },
             trailing:   ShareLink(item: URL(fileURLWithPath: filePath)).foregroundColor(.primary)
-
+            
         )
         .onAppear {
             do {

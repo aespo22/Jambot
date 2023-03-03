@@ -37,6 +37,10 @@ struct RandomColorView: View {
         
     }
 }
+
+
+
+
 struct HistoryView: View {
     let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
     let folderUrl: URL
@@ -49,14 +53,16 @@ struct HistoryView: View {
     @State private var selectedFile: FileInfo?
     @State private var showGenerateView: Bool = false
     
+    
+    @ObservedObject var filesManager = FilesManager()
+    
     var body: some View {
         
         VStack (alignment: .leading) {
-            NavigationView {
+            NavigationStack {
                 VStack{
                     
-                    
-                    if getFiles().isEmpty {
+                    if filesManager.files.isEmpty {
                         VStack {
                             Spacer()
                             Text("No Songs Saved")
@@ -77,10 +83,8 @@ struct HistoryView: View {
                         
                     }
                     else {
-                        
                         List {
-                            
-                            ForEach(getFiles()) { file in
+                            ForEach(filesManager.files.sorted(by: { $0.date > $1.date })) { file in
                                 NavigationLink(destination: OfflinePlayerView(filePath: file.path.path, input: file.input, date: file.date)) {
                                     HStack{
                                         RandomColorView().cornerRadius(10)
@@ -114,8 +118,11 @@ struct HistoryView: View {
                             }
                             
                         }
+                        .refreshable {
+                            filesManager.refreshFiles()
+                        }
                         .listStyle(PlainListStyle())
-
+                        
                         
                     }
                     
@@ -125,7 +132,7 @@ struct HistoryView: View {
                     Spacer()
                     
                     Button {
-                        showGenerateView.toggle()
+                        showGenerateView = true
                     } label: {
                         ZStack {
                             Color(red: 199/255, green: 37/255, blue: 115/255, opacity: 1.0)
@@ -151,7 +158,8 @@ struct HistoryView: View {
                 }
                 .navigationBarTitle("History")
                 .fullScreenCover(isPresented: $showGenerateView) {
-                    exampleAPIUse()
+                    exampleAPIUse(filesManager: filesManager)
+                    
                 }
                 
                 
@@ -159,61 +167,26 @@ struct HistoryView: View {
             .navigationBarBackButtonHidden(true)
             
             
-        } .alert(isPresented: $showAlert) {
+        }
+        
+        .alert(isPresented: $showAlert) {
             Alert(title: Text("Confirm Deletion"), message: Text("Are you sure you want to delete this song?"), primaryButton: .destructive(Text("Delete")) {
                 if let file = selectedFile {
-                    deleteFile(file)
+                    filesManager.deleteFile(file)
+                    filesManager.refreshFiles()
                     selectedFile = nil
                 }
             }, secondaryButton: .cancel(Text("Cancel")))
         }
     }
     
-    func deleteFile(_ file: FileInfo) {
-        do {
-            try FileManager.default.removeItem(at: file.path)
-        } catch {
-            print("Error deleting file: \(error)")
-        }
-    }
     
     
-    func getFiles() -> [FileInfo] {
-        let fileManager = FileManager.default
-        let documentsUrl = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let directoryUrl = documentsUrl.appendingPathComponent("mp3JamBotFiles")
-        
-        var fileInfos: [FileInfo] = []
-        
-        do {
-            let files = try fileManager.contentsOfDirectory(at: directoryUrl, includingPropertiesForKeys: nil)
-            for file in files {
-                if file.lastPathComponent.starts(with: ".DS_Store") {
-                    continue // Ignore .DS_Store file
-                }
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd-HH-mm"
-                let filename = file.lastPathComponent
-                if let date = dateFormatter.date(from: String(filename.prefix(16))) {
-                    let input = String(filename.dropFirst(17).dropLast(4)).replacingOccurrences(of: "-", with: " ")
-                    fileInfos.append(FileInfo(input: input, date: formatDate(date), path: file))
-                } else {
-                    fatalError("Error parsing date from file name: \(filename)")
-                }
-            }
-        } catch {
-            print(error)
-        }
-        
-        return fileInfos
-    }
     
-    func formatDate(_ date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .short
-        return dateFormatter.string(from: date)
-    }
+    
+    
+    
+    
     
     
 }
