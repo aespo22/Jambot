@@ -47,6 +47,7 @@ struct HistoryView: View {
     
     @State private var showAlert = false
     @State private var selectedFile: FileInfo?
+    @State private var showGenerateView: Bool = false
     
     var body: some View {
         
@@ -57,6 +58,7 @@ struct HistoryView: View {
                     
                     if getFiles().isEmpty {
                         VStack {
+                            Spacer()
                             Text("No Songs Saved")
                                 .font(.title)
                                 .foregroundColor(.gray)
@@ -64,6 +66,12 @@ struct HistoryView: View {
                             Text("Try adding a new song below!")
                                 .font(.headline)
                                 .foregroundColor(.gray)
+                            Spacer().frame(height: 10)
+                            
+                            Image(systemName: "arrow.down")
+                                .font(.headline)
+                                .foregroundColor(.gray)
+                            Spacer()
                             
                         }
                         
@@ -100,13 +108,14 @@ struct HistoryView: View {
                                 }
                                 .contextMenu {
                                     ShareLink(item: URL(fileURLWithPath: file.path.path)).foregroundColor(.primary)
-
-
+                                    
+                                    
                                 }
                             }
                             
                         }
                         .listStyle(PlainListStyle())
+
                         
                     }
                     
@@ -114,7 +123,10 @@ struct HistoryView: View {
                     
                     
                     Spacer()
-                    NavigationLink(destination: exampleAPIUse()) {
+                    
+                    Button {
+                        showGenerateView.toggle()
+                    } label: {
                         ZStack {
                             Color(red: 199/255, green: 37/255, blue: 115/255, opacity: 1.0)
                             HStack {
@@ -126,16 +138,21 @@ struct HistoryView: View {
                                     .font(.headline)
                             }
                         }
-                        .frame(maxWidth: .infinity)
                         .frame(height: 60)
                         .cornerRadius(12)
+                        .padding(.horizontal)
+                        
                     }
                     .simultaneousGesture(TapGesture().onEnded {
                         let impactMed = UIImpactFeedbackGenerator(style: .medium)
                         impactMed.impactOccurred()
                     })
+                    
                 }
                 .navigationBarTitle("History")
+                .fullScreenCover(isPresented: $showGenerateView) {
+                    exampleAPIUse()
+                }
                 
                 
             }

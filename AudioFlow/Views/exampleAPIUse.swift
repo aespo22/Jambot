@@ -29,6 +29,10 @@ struct exampleAPIUse: View {
 
     @FocusState private var textFieldIsFocused: Bool
 
+    //to handle modal window closure
+    @Environment(\.dismiss) var dismiss
+
+    
     var body: some View {
         
         switch currentView {
@@ -58,6 +62,17 @@ struct exampleAPIUse: View {
     var inputView: some View {
         
         VStack {
+            Spacer().frame(height: 10)
+            HStack {
+                Spacer()
+                Button(action: {dismiss()}, label: {
+                    Image(systemName: "xmark").foregroundColor(.primary)
+                        .font(.headline)
+
+                })
+                Spacer().frame(width: 30)
+            }
+            Spacer()
             HStack {
                 Spacer().frame(width: 20)
                 Text("Create your song:")
@@ -188,18 +203,22 @@ struct exampleAPIUse: View {
                     
                     
                 }
-                
             }.padding(.horizontal, 20)
+                
+            Spacer()
+
             
-            //            Text(responseText)
-            //                .padding()
-        }.alert(isPresented: $showNoInternetAlert) {
+            
+           
+        }
+        .alert(isPresented: $showNoInternetAlert) {
             Alert(
                 title: Text("No internet connection available"),
                 message: Text("JamBot is really cool, but you need an internet connection :/"),
                 dismissButton: .default(Text("OK"))
             )
         }
+        .navigationBarItems(leading: Button(action: {dismiss()}, label: {Image(systemName: "xmark").foregroundColor(.white)}))
 
     }
 }
