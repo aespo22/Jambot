@@ -12,10 +12,10 @@ struct MagicScreen: View {
     @State private var colors = [Color.purple, Color.pink, Color.yellow, Color.mint]
     let gradient = Gradient(colors: [Color.purple,Color.blue, Color.yellow, Color.mint])
     
-@State private var isLoading = false
+    @State private var isLoading = false
     
     var delay: Double = 0 // 1. << don't use state for injectable property
-
+    
     @State private var scale: CGFloat = 0.5
     
     var body: some View {
@@ -23,7 +23,7 @@ struct MagicScreen: View {
         ZStack {
             LinearGradient(gradient: gradient, startPoint: .top, endPoint: .bottom)
                 .edgesIgnoringSafeArea(.all)
-                
+            
             ForEach(colors.indices, id: \.self) { index in
                 Circle()
                     .fill(getGradient(color: colors[index]))
@@ -34,20 +34,20 @@ struct MagicScreen: View {
                     .blur(radius: 20)
             }
             
-
-                
-                
+            
+            
+            
             VStack {
- 
-                            
+                
+                
                 HStack (alignment: .bottom) {
                     
                     Text("Making some magic")
-                                .font(.title)
-                                .fontWeight(.bold)
-                            .foregroundColor(.white)
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
                     Spacer().frame(width: 4)
-
+                    
                     VStack {
                         HStack {
                             Circle()
@@ -56,21 +56,21 @@ struct MagicScreen: View {
                                 .scaleEffect(scale)
                                 .animation(
                                     Animation.easeInOut(duration: 1)
-                                       .repeatForever().delay(delay), value: scale
+                                        .repeatForever().delay(delay), value: scale
                                 )
                                 .onAppear {
                                     self.scale = 1
-                            }
+                                }
                             
                             Spacer().frame(width: 1)
-
+                            
                             Circle()
                                 .frame(width: 7, height: 7)
                                 .foregroundColor(Color.white)
                                 .scaleEffect(scale)
                                 .animation(
                                     Animation.easeInOut(duration: 2)
-                                       .repeatForever().delay(delay), value: scale
+                                        .repeatForever().delay(delay), value: scale
                                 )
                                 .onAppear {
                                     self.scale = 1
@@ -82,7 +82,7 @@ struct MagicScreen: View {
                                 .scaleEffect(scale)
                                 .animation(
                                     Animation.easeInOut(duration: 3)
-                                       .repeatForever().delay(delay), value: scale
+                                        .repeatForever().delay(delay), value: scale
                                 )
                                 .onAppear {
                                     self.scale = 1
@@ -94,8 +94,8 @@ struct MagicScreen: View {
                     
                     
                 }
-                  
-                    
+                
+                
                 
             }
             
@@ -122,10 +122,10 @@ struct MagicScreen: View {
     func getGradient(color: Color) -> LinearGradient {
         let start = Color.white.opacity(0.05)
         let end = Color.white.opacity(0.05)
-
+        
         return LinearGradient(gradient: Gradient(colors: [start, color.opacity(1), end]), startPoint: .top, endPoint: .bottom)
     }
-
+    
     func getNewColor() -> Color {
         let hue = Double.random(in: 5...10)
         let saturation = Double.random(in: 5...10)

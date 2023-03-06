@@ -84,10 +84,13 @@ struct OfflinePlayerView: View {
                     .foregroundColor(.primary) // Set foreground color to white
             },
             trailing:   ShareLink(item: URL(fileURLWithPath: filePath)).foregroundColor(.primary)
-
+            
         )
         .onAppear {
+            
             do {
+                try AVAudioSession.sharedInstance().setCategory(.playback)
+
                 let url = URL(fileURLWithPath: filePath)
                 player = try AVAudioPlayer(contentsOf: url)
                 player?.prepareToPlay()
@@ -119,13 +122,6 @@ struct OfflinePlayerView: View {
             }
             isPlaying.toggle()
         }
-    }
-    
-    
-    func shareFile() {
-        let fileURL = URL(fileURLWithPath: filePath)
-        let activityVC = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
-        UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
     }
     
     func sliderEditingChanged(editingStarted: Bool) {

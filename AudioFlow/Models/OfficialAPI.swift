@@ -13,26 +13,26 @@ class trackGenerationAPI {
         let method, apiVer: String
         let status: Int
         let data: DataClass
-
+        
         enum CodingKeys: String, CodingKey {
             case method
             case apiVer = "api_ver"
             case status, data
         }
     }
-
+    
     // MARK: - DataClass
     struct DataClass: Codable {
         let tasks: [Task]
     }
-
+    
     // MARK: - Task
     struct Task: Codable {
         let taskID: String
         let taskStatusCode: Int
         let taskStatusText: String
         let downloadLink: URL
-
+        
         enum CodingKeys: String, CodingKey {
             case taskID = "task_id"
             case taskStatusCode = "task_status_code"

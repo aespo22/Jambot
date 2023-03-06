@@ -32,7 +32,7 @@ func trackStatus(downloadLink: String, pat: String, completion: @escaping (Bool)
         
         do {
             let responseJson = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-//            print("Response JSON: \(responseJson)")
+            //            print("Response JSON: \(responseJson)")
             
             guard let data = responseJson["data"] as? [String: Any], let tasks = data["tasks"] as? [[String: Any]] else {
                 print("Failed to parse tasks from response data")
