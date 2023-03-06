@@ -43,8 +43,10 @@ struct exampleAPIUse: View {
         case .magicScreen:
             MagicScreen()
                 .task {
+                    let currentLink = link // Capture the link property in a local variable
+
                     let _ = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { timer in
-                        trackStatus(downloadLink: link, pat: pat) { success in
+                        trackStatus(downloadLink: currentLink, pat: pat) { success in
                             if success {
                                 timer.invalidate()
                                 DispatchQueue.main.async {
@@ -66,13 +68,17 @@ struct exampleAPIUse: View {
         VStack {
             Spacer().frame(height: 10)
             HStack {
-                Spacer()
+                Spacer().frame(width: 30)
+
                 Button(action: {dismiss()}, label: {
-                    Image(systemName: "xmark").foregroundColor(.primary)
+                    Image(systemName: "xmark")
+                        .foregroundColor(.primary)
                         .font(.headline)
+                       
                     
                 })
-                Spacer().frame(width: 30)
+                Spacer()
+
             }
             Spacer()
             HStack {

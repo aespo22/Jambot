@@ -193,7 +193,9 @@ struct MusicPlayerView: View {
                             dismiss()
                             
                         }, label: {
-                            Image(systemName: "xmark").foregroundColor(.primary)
+
+                            Image(systemName: "xmark")
+                                .foregroundColor(.primary)
                                 .font(.headline)
                         })
                         

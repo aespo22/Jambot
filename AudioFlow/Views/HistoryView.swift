@@ -15,7 +15,7 @@ struct Song {
 
 
 
-struct FileInfo: Identifiable {
+struct FileInfo: Identifiable, Hashable {
     let id = UUID()
     let input: String
     let date: String
@@ -47,6 +47,7 @@ struct HistoryView: View {
     
     init() {
         folderUrl = documentsUrl.appendingPathComponent("mp3JamBotFiles")
+
     }
     
     @State private var showAlert = false
@@ -84,7 +85,7 @@ struct HistoryView: View {
                     }
                     else {
                         List {
-                            ForEach(filesManager.files.sorted(by: { $0.date > $1.date })) { file in
+                            ForEach(filesManager.files.sorted(by: { $0.date > $1.date }), id: \.self) { file in
                                 NavigationLink(destination: OfflinePlayerView(filePath: file.path.path, input: file.input, date: file.date)) {
                                     HStack{
                                         RandomColorView().cornerRadius(10)
