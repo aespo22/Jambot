@@ -25,7 +25,7 @@ struct OfflinePlayerView: View {
     var body: some View {
         
         VStack {
-            Text("Prompt:")
+            Text("promp")
                 .bold()
                 .font(.title3)
                 .padding(.top, 50)

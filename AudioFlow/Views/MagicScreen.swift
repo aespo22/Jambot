@@ -44,7 +44,7 @@ struct MagicScreen: View {
                 
                 HStack (alignment: .bottom) {
                     
-                    Text("Making some magic")
+                    Text("makmagic")
                         .font(.title)
                         .fontWeight(.bold)
                         .foregroundColor(.white)
@@ -146,5 +146,8 @@ struct MagicScreen: View {
 struct MagicScreen_Previews: PreviewProvider {
     static var previews: some View {
         MagicScreen()
+            .environment(\.locale, Locale.init(identifier: "eng"))
+        MagicScreen()
+            .environment(\.locale, Locale.init(identifier: "kor"))
     }
 }

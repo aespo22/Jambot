@@ -66,11 +66,11 @@ struct HistoryView: View {
                     if filesManager.files.isEmpty {
                         VStack {
                             Spacer()
-                            Text("No Songs Saved")
+                            Text("nosongsaved")
                                 .font(.title)
                                 .foregroundColor(.gray)
                             Spacer().frame(height: 10)
-                            Text("Try adding a new song below!")
+                            Text("addsongs")
                                 .font(.headline)
                                 .foregroundColor(.gray)
                             Spacer().frame(height: 10)
@@ -141,7 +141,7 @@ struct HistoryView: View {
                                 Image(systemName: "plus")
                                     .foregroundColor(.white)
                                     .font(.headline)
-                                Text("Generate Song")
+                                Text("songgen")
                                     .foregroundColor(.white)
                                     .font(.headline)
                             }
@@ -157,7 +157,7 @@ struct HistoryView: View {
                     })
                     
                 }
-                .navigationBarTitle("History")
+                .navigationBarTitle("historytabtitle")
                 .fullScreenCover(isPresented: $showGenerateView) {
                     exampleAPIUse(filesManager: filesManager)
                     
@@ -171,13 +171,13 @@ struct HistoryView: View {
         }
         
         .alert(isPresented: $showAlert) {
-            Alert(title: Text("Confirm Deletion"), message: Text("Are you sure you want to delete this song?"), primaryButton: .destructive(Text("Delete")) {
+            Alert(title: Text("confirmdel"), message: Text("delconfirm"), primaryButton: .destructive(Text("deletfunc")) {
                 if let file = selectedFile {
                     filesManager.deleteFile(file)
                     filesManager.refreshFiles()
                     selectedFile = nil
                 }
-            }, secondaryButton: .cancel(Text("Cancel")))
+            }, secondaryButton: .cancel(Text("canc")))
         }
     }
     
@@ -195,5 +195,8 @@ struct HistoryView: View {
 struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {
         HistoryView()
+            .environment(\.locale, Locale.init(identifier: "eng"))
+        HistoryView()
+            .environment(\.locale, Locale.init(identifier: "kor"))
     }
 }

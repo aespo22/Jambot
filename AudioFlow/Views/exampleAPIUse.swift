@@ -71,7 +71,7 @@ struct exampleAPIUse: View {
                 
                 if showTips {
                     VStack (alignment: .leading){
-                        Text("Helpful Tips")
+                        Text("felp")
                             .font(.title)
                             .bold()
                         List(tips, id: \.self) { tip in
@@ -115,7 +115,7 @@ struct exampleAPIUse: View {
                 .frame(height: 70)
                 
                 HStack {
-                    Text("Create your song:")
+                    Text("songcreat")
                         .font(.system(size: 30, weight: .bold))
                         .foregroundColor(.primary)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -125,7 +125,7 @@ struct exampleAPIUse: View {
                 
  
                 
-                TextField("Type your song description", text: $input, axis: .vertical)
+                TextField("typein", text: $input, axis: .vertical)
                     .focused($textFieldIsFocused)
                     .onAppear {
                         self.textFieldIsFocused = true
@@ -282,9 +282,9 @@ struct exampleAPIUse: View {
             }
             .alert(isPresented: $showNoInternetAlert) {
                 Alert(
-                    title: Text("No internet connection available"),
-                    message: Text("JamBot is really cool, but you need an internet connection :/"),
-                    dismissButton: .default(Text("OK"))
+                    title: Text("nointernet"),
+                    message: Text("jambnet"),
+                    dismissButton: .default(Text("aight"))
                 )
             }
             .navigationBarBackButtonHidden(true)
@@ -305,5 +305,8 @@ enum CurrentView {
 struct API_Previews: PreviewProvider {
     static var previews: some View {
         exampleAPIUse(filesManager: FilesManager())
+            .environment(\.locale, Locale.init(identifier: "eng"))
+        exampleAPIUse(filesManager: FilesManager())
+            .environment(\.locale, Locale.init(identifier: "kor"))
     }
 }
