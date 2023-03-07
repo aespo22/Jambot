@@ -30,9 +30,12 @@ struct exampleAPIUse: View {
     
     @ObservedObject var filesManager: FilesManager
     
-    let tips = ["Do not reference existing songs", "Focus on genre, instruments, bpm, and vibe (dark, happy, etc...)", "Longer songs = longer loading times", "Have fun!"]
+    let tips = ["donotreference", "focusonyour", "longersongslonger", "havefun"]
+
     
-    let examples = ["Dark techno song melodic", "140bpm trap beat hard", "Dymphony rising in anticipation", "Morning relaxation calming"]
+    let examples = ["darktechno", "bpmtrackhard", "symphonyrising", "morningrelax"]
+
+    
     
     @State private var showTips = false
     
@@ -96,7 +99,7 @@ struct exampleAPIUse: View {
                 .frame(height: 70)
                 
                 HStack {
-                    Text("Create your song")
+                    Text("songcreat")
                         .font(.system(size: 30, weight: .bold))
                         .foregroundColor(.primary)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -106,7 +109,7 @@ struct exampleAPIUse: View {
                 
                 
                 
-                TextField("Type in your keywords...", text: $input, axis: .vertical)
+                TextField("typein", text: $input, axis: .vertical)
                     .focused($textFieldIsFocused)
                     .onAppear {
                         self.textFieldIsFocused = true
@@ -248,22 +251,24 @@ struct exampleAPIUse: View {
                     })
                     .frame(maxWidth: .infinity, alignment: .leading)
                     Spacer().frame(height: 20)
-                    Text("Helpful Tips")
+                    Text("felp")
                         .font(.title)
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .leading)
+                   
+                    
                     List(tips, id: \.self) { tip in
                         
                         HStack {
                             Text(" ⚡️ ")
-                            Text(tip)
+                            Text(LocalizedStringKey(tip))
                         }
                         
                         
                     }
                     .listStyle(.inset)
                     
-                    Text("Examples")
+                    Text("examples")
                         .font(.title)
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -272,7 +277,7 @@ struct exampleAPIUse: View {
                         
                         HStack {
                             Text(" 📖 ")
-                            Text(sentence).italic()
+                            Text(LocalizedStringKey(sentence)).italic()
                         }
                         
                     }

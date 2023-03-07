@@ -12,7 +12,7 @@
 "jambnet" = "JamBot is really cool, but you need an internet connection :/";
 "aight" = "OK";
 "songcreat" = "Create your song:";
-"typein" = "Type your song descriptionK";
+"typein" = "Type in your keywords...";
 "start" = "Start";
 "canc" = "Cancel";
 "stop"= "End";
@@ -26,3 +26,14 @@
 "aigen" = "AI Generated";
 "song"= "song";
 "felp" = "Helpful Tips";
+"examples" = "Examples";
+"donotreference" = "Do not reference existing songs";
+"focusonyour" = "Focus on genre, instruments, bpm, and vibe (dark, happy, etc...)";
+"longersongslonger" = "Longer songs = longer loading times";
+"havefun" = "Have fun!";
+"darktechno" = "Dark techno song melodic";
+"bpmtrackhard" = "140bpm trap beat hard";
+"symphonyrising" = "Symphony rising in anticipation";
+"morningrelax" = "Morning relaxation calming";
+
+
