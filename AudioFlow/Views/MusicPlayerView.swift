@@ -99,7 +99,7 @@ struct MusicPlayerView: View {
             ZStack {
                 VStack {
                     
-                    Text("Prompt:")
+                    Text("promp")
                         .bold()
                         .font(.title3)
                         .padding(.top, 50)
@@ -166,9 +166,9 @@ struct MusicPlayerView: View {
                     }else{
                         
                         HStack {
-                            Text("Start")
+                            Text("start")
                             Spacer()
-                            Text("End")
+                            Text("stop")
                         }
                         .padding(.horizontal)
                         Slider(value: $currentTime, in: 0...0)
@@ -241,11 +241,11 @@ struct MusicPlayerView: View {
                                     .font(.largeTitle)
                                 Spacer().frame(height: 10)
                                 
-                                Text("Song Saved")
+                                Text("songsav")
                                     .font(.largeTitle)
                                     .bold()
                                 Spacer().frame(height: 10)
-                                Text("Play it anytime on your History page.")
+                                Text("playitanytime")
                                     .font(.body)
                                     .multilineTextAlignment(.center)
                                 Spacer()

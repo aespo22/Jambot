@@ -44,7 +44,7 @@ struct MagicScreen: View {
                 
                 HStack (alignment: .bottom) {
                     
-                    Text("Making some magic")
+                    Text("makmagic")
                         .font(.title)
                         .fontWeight(.bold)
                         .foregroundColor(.white)

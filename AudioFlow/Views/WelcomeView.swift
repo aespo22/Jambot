@@ -49,12 +49,12 @@ struct WelcomeView: View {
             HStack {
                 VStack(alignment: .leading) {
                     NavigationLink(destination: HistoryView().navigationBarBackButtonHidden(true)) {
-                        Text("Create your first")
+                        Text("create")
                             .font(.system(size: 30))
                             .foregroundColor(.white)
                     }
                     NavigationLink(destination: HistoryView().navigationBarBackButtonHidden(true)) {
-                        Text("AI Generated")
+                        Text("aigen")
                             .font(.system(size: 30, weight: .bold))
                             .foregroundColor(.white)
                     }
