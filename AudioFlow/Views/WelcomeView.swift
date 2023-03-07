@@ -48,17 +48,17 @@ struct WelcomeView: View {
         NavigationView {
             HStack {
                 VStack(alignment: .leading) {
-                    NavigationLink(destination: exampleAPIUse(filesManager: filesManager).navigationBarBackButtonHidden(true)) {
+                    NavigationLink(destination: HistoryView().navigationBarBackButtonHidden(true)) {
                         Text("Create your first")
                             .font(.system(size: 30))
                             .foregroundColor(.white)
                     }
-                    NavigationLink(destination: exampleAPIUse(filesManager: filesManager).navigationBarBackButtonHidden(true)) {
+                    NavigationLink(destination: HistoryView().navigationBarBackButtonHidden(true)) {
                         Text("AI Generated")
                             .font(.system(size: 30, weight: .bold))
                             .foregroundColor(.white)
                     }
-                    NavigationLink(destination: exampleAPIUse(filesManager: filesManager).navigationBarBackButtonHidden(true)) {
+                    NavigationLink(destination: HistoryView().navigationBarBackButtonHidden(true)) {
                         Text("song")
                             .font(.system(size: 30))
                             .foregroundColor(.white)
@@ -69,7 +69,7 @@ struct WelcomeView: View {
                 .background(Color.black)
                 .cornerRadius(8)
                 
-                NavigationLink(destination: exampleAPIUse(filesManager: filesManager).navigationBarBackButtonHidden(true)) {
+                NavigationLink(destination: HistoryView().navigationBarBackButtonHidden(true)) {
                     Image(systemName: "arrow.forward.circle")
                         .foregroundColor(.white)
                         .font(.system(size: 40, weight: .bold))
@@ -78,6 +78,20 @@ struct WelcomeView: View {
             .padding()
         }
     }
+    private func navigateToHistoryView() {
+        // Set the flag to indicate that the boarding view has been shown
+        let defaults = UserDefaults.standard
+        defaults.set(true, forKey: "hasShownBoardView")
+        
+        // Navigate to the HistoryView
+        let historyView = HistoryView()
+        if let window = UIApplication.shared.windows.first {
+            window.rootViewController = UIHostingController(rootView: historyView)
+            window.makeKeyAndVisible()
+        }
+    }
+    
+    
 }
 
 struct WelcomeView_Previews: PreviewProvider {
