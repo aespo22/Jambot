@@ -35,6 +35,7 @@ struct exampleAPIUse: View {
     
     
     
+    
     var body: some View {
         
         switch currentView {
@@ -44,7 +45,7 @@ struct exampleAPIUse: View {
             MagicScreen()
                 .task {
                     let currentLink = link // Capture the link property in a local variable
-
+                    
                     let _ = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { timer in
                         trackStatus(downloadLink: currentLink, pat: pat) { success in
                             if success {
@@ -69,26 +70,56 @@ struct exampleAPIUse: View {
             Spacer().frame(height: 10)
             HStack {
                 Spacer().frame(width: 30)
-
+                
                 Button(action: {dismiss()}, label: {
                     Image(systemName: "xmark")
                         .foregroundColor(.primary)
                         .font(.headline)
-                       
+                    
                     
                 })
                 Spacer()
-
+                
             }
             Spacer()
+            
+            HStack(alignment: .center, spacing: 8) {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(alignment: .top, spacing: 8) {
+                        if !input.isEmpty {
+                            
+                            ForEach(input.split(separator: " "), id: \.self) { word in
+                                Text(word)
+                                    .font(.body)
+                                    .foregroundColor(.primary)
+                                    .padding(.horizontal, 8)
+                                    .padding(.vertical, 4)
+                                    .background(.gray)
+                                    .cornerRadius(16)
+                                    .opacity(0.2)
+                            }
+                        }
+                    }
+                }
+            }
+            .padding(.leading, 20)
+            .padding(.trailing, 20)
+            .frame(height: 70)
+            
             HStack {
-                Spacer().frame(width: 20)
                 Text("Create your song:")
                     .font(.system(size: 30, weight: .bold))
-                    .foregroundColor(.white)
-                Spacer()
+                    .foregroundColor(.primary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
             }
-            Spacer().frame(height: 30)
+            .padding(.horizontal, 20)
+            
+            
+            
+            
+            
+            
             
             TextField("Type your song description", text: $input, axis: .vertical)
                 .focused($textFieldIsFocused)
@@ -214,8 +245,7 @@ struct exampleAPIUse: View {
             }.padding(.horizontal, 20)
             
             Spacer()
-            
-            
+
             
             
         }
@@ -226,9 +256,10 @@ struct exampleAPIUse: View {
                 dismissButton: .default(Text("OK"))
             )
         }
-        
+
         
     }
+    
 }
 
 enum CurrentView {
