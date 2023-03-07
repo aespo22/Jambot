@@ -90,7 +90,7 @@ struct MusicPlayerView: View {
     
     let downloadManager = DownloadManager()
     
-    
+
     
     var body: some View {
         
@@ -180,11 +180,17 @@ struct MusicPlayerView: View {
                 .background(MagicBg())
                 .navigationBarBackButtonHidden(true)
                 .onDisappear {
+                    UIApplication.shared.isIdleTimerDisabled = false
+
                     let impactLight = UIImpactFeedbackGenerator(style: .light)
                     impactLight.impactOccurred()
                     
                     soundManager.pause()
                     
+                }
+                .onAppear{
+                    UIApplication.shared.isIdleTimerDisabled = true
+
                 }
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction ) {
