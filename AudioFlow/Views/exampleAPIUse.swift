@@ -79,12 +79,11 @@ struct exampleAPIUse: View {
                                 ForEach(input.split(separator: " "), id: \.self) { word in
                                     Text(word)
                                         .font(.body)
-                                        .foregroundColor(.primary)
+                                        .foregroundColor(.black)
                                         .padding(.horizontal, 8)
                                         .padding(.vertical, 4)
-                                        .background(.gray)
+                                        .background(.white)
                                         .cornerRadius(16)
-                                        .opacity(0.2)
                                 }
                             }
                         }
