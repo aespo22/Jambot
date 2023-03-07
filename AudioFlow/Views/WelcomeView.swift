@@ -6,20 +6,16 @@
 //
 import SwiftUI
 import UIKit
-
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
-        
-        // Check if the flag is set
         let defaults = UserDefaults.standard
         let hasShownBoardView = defaults.bool(forKey: "hasShownBoardView")
         
         if !hasShownBoardView {
-            // Show the board view and set the flag
             defaults.set(true, forKey: "hasShownBoardView")
             let exampleAPIUse = WelcomeView(filesManager: FilesManager())
             if let windowScene = scene as? UIWindowScene {
@@ -29,7 +25,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 window.makeKeyAndVisible()
             }
         } else {
-            // Show the app's main view
             let contentView = HistoryView()
             if let windowScene = scene as? UIWindowScene {
                 let window = UIWindow(windowScene: windowScene)
