@@ -30,7 +30,7 @@ struct exampleAPIUse: View {
     
     @ObservedObject var filesManager: FilesManager
     
-    let tips = ["Always have a hat", "Do everything well", "Orange and banana", "Mango and apple"]
+    let tips = ["Do not reference existing songs", "Focus on genre, instruments, bpm, and vibe (dark, happy, etc...)", "Longer songs = longer loading times", "Have fun!"]
     
     @State private var showTips = false
 
@@ -77,7 +77,7 @@ struct exampleAPIUse: View {
                         List(tips, id: \.self) { tip in
                             
                             HStack {
-                                Text(" - ")
+                                Text(" ⚡️ ")
                                 Text(tip)
                             }
                         }
