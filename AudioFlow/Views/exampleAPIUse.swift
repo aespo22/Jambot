@@ -44,9 +44,10 @@ struct exampleAPIUse: View {
         case .magicScreen:
             MagicScreen()
                 .task {
-                    let currentLink = link // Capture the link property in a local variable
+                  
                     
                     let _ = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { timer in
+                        let currentLink = link
                         trackStatus(downloadLink: currentLink, pat: pat) { success in
                             if success {
                                 timer.invalidate()
