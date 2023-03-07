@@ -97,5 +97,8 @@ struct WelcomeView: View {
 struct WelcomeView_Previews: PreviewProvider {
     static var previews: some View {
         WelcomeView(filesManager: FilesManager())
+            .environment(\.locale, Locale.init(identifier: "eng"))
+        WelcomeView(filesManager: FilesManager())
+            .environment(\.locale, Locale.init(identifier: "kor"))
     }
 }

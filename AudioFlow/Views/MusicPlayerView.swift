@@ -272,6 +272,9 @@ struct MusicPlayerView_Previews: PreviewProvider {
     
     static var previews: some View {
         MusicPlayerView(officialLink: .constant("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"), input: .constant("hello grinder baby back baby back wayyyy I think this does not work anymoreeee baby yearhhhss"), filesManager: FilesManager())
+            .environment(\.locale, Locale.init(identifier: "eng"))
+        MusicPlayerView(officialLink: .constant("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"), input: .constant("hello grinder baby back baby back wayyyy I think this does not work anymoreeee baby yearhhhss"), filesManager: FilesManager())
+            .environment(\.locale, Locale.init(identifier: "kor"))
     }
 }
 

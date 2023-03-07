@@ -305,5 +305,8 @@ enum CurrentView {
 struct API_Previews: PreviewProvider {
     static var previews: some View {
         exampleAPIUse(filesManager: FilesManager())
+            .environment(\.locale, Locale.init(identifier: "eng"))
+        exampleAPIUse(filesManager: FilesManager())
+            .environment(\.locale, Locale.init(identifier: "kor"))
     }
 }

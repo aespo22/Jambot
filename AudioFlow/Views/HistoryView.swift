@@ -195,5 +195,8 @@ struct HistoryView: View {
 struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {
         HistoryView()
+            .environment(\.locale, Locale.init(identifier: "eng"))
+        HistoryView()
+            .environment(\.locale, Locale.init(identifier: "kor"))
     }
 }
