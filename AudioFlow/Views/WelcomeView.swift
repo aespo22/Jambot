@@ -85,10 +85,14 @@ struct WelcomeView: View {
         
         // Navigate to the HistoryView
         let historyView = HistoryView()
-        if let window = UIApplication.shared.windows.first {
+        
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let window = windowScene.windows.first {
             window.rootViewController = UIHostingController(rootView: historyView)
             window.makeKeyAndVisible()
+
         }
+       
     }
     
     
