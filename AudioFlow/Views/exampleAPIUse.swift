@@ -66,197 +66,214 @@ struct exampleAPIUse: View {
     
     var inputView: some View {
         
-        VStack {
-            Spacer().frame(height: 10)
-            HStack {
-                Spacer().frame(width: 30)
-                
-                Button(action: {dismiss()}, label: {
-                    Image(systemName: "xmark")
-                        .foregroundColor(.primary)
-                        .font(.headline)
-                    
-                    
-                })
+        NavigationStack {
+            VStack {
                 Spacer()
                 
-            }
-            Spacer()
-            
-            HStack(alignment: .center, spacing: 8) {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(alignment: .top, spacing: 8) {
-                        if !input.isEmpty {
-                            
-                            ForEach(input.split(separator: " "), id: \.self) { word in
-                                Text(word)
-                                    .font(.body)
-                                    .foregroundColor(.primary)
-                                    .padding(.horizontal, 8)
-                                    .padding(.vertical, 4)
-                                    .background(.gray)
-                                    .cornerRadius(16)
-                                    .opacity(0.2)
+                HStack(alignment: .center, spacing: 8) {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(alignment: .top, spacing: 8) {
+                            if !input.isEmpty {
+                                
+                                ForEach(input.split(separator: " "), id: \.self) { word in
+                                    Text(word)
+                                        .font(.body)
+                                        .foregroundColor(.primary)
+                                        .padding(.horizontal, 8)
+                                        .padding(.vertical, 4)
+                                        .background(.gray)
+                                        .cornerRadius(16)
+                                        .opacity(0.2)
+                                }
                             }
                         }
                     }
                 }
-            }
-            .padding(.leading, 20)
-            .padding(.trailing, 20)
-            .frame(height: 70)
-            
-            HStack {
-                Text("Create your song:")
-                    .font(.system(size: 30, weight: .bold))
-                    .foregroundColor(.primary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-            }
-            .padding(.horizontal, 20)
-            
-            
-            
-            
-            
-            
-            
-            TextField("Type your song description", text: $input, axis: .vertical)
-                .focused($textFieldIsFocused)
-                .onAppear {
-                    self.textFieldIsFocused = true
-                    
-                }
-                .frame(height: 48)
-                .padding(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 50))
-                .cornerRadius(5)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 5)
-                        .stroke(lineWidth: 2.0)
-                )
-                .lineLimit(2, reservesSpace: true)
                 .padding(.leading, 20)
                 .padding(.trailing, 20)
-                .overlay(
-                    HStack {
-                        Spacer()
-                        if !input.isEmpty {
-                            Button(action: {
-                                input = ""
-                            }) {
-                                Image(systemName: "xmark.circle.fill")
-                                    .foregroundColor(.gray)
-                            }
-                            .padding(.trailing, 40)
-                        }
-                    },
-                    alignment: .trailing
-                )
-            
-            
-            Spacer().frame(height: 16)
-            
-            HStack {
-                if !input.isEmpty {
+                .frame(height: 70)
+                
+                HStack {
+                    Text("Create your song:")
+                        .font(.system(size: 30, weight: .bold))
+                        .foregroundColor(.primary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    Button(action: {
+                }
+                .padding(.horizontal, 20)
+                
+                
+                
+                
+                
+                
+                
+                TextField("Type your song description", text: $input, axis: .vertical)
+                    .focused($textFieldIsFocused)
+                    .onAppear {
+                        self.textFieldIsFocused = true
                         
-                        
-                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                        
-                        
-                        let impactMed = UIImpactFeedbackGenerator(style: .medium)
-                        impactMed.impactOccurred()
-                        
-                        
-                        
-                        if networkMonitor.isConnected {
-                            currentView = .magicScreen
-                            
-                            api.generateTrack(input: input, pat: pat, duration: duration) { result in
-                                switch result {
-                                case .success(let response):
-                                    let tasks = response.data.tasks
-                                    guard !tasks.isEmpty else { return }
-                                    self.responseText = tasks[0].downloadLink.absoluteURL.absoluteString
-                                    NSLog("!!! INPUT: "+input)
-                                    NSLog("!!! Status: "+String(tasks[0].taskStatusCode))
-                                    self.link = String(self.responseText)
-                                    NSLog("!!! LINK: "+self.link)
-                                case .failure(let error):
-                                    currentView = .inputView
-                                    
-                                    self.responseText = error.localizedDescription
+                    }
+                    .frame(height: 48)
+                    .padding(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 50))
+                    .cornerRadius(5)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 5)
+                            .stroke(lineWidth: 2.0)
+                    )
+                    .lineLimit(2, reservesSpace: true)
+                    .padding(.leading, 20)
+                    .padding(.trailing, 20)
+                    .overlay(
+                        HStack {
+                            Spacer()
+                            if !input.isEmpty {
+                                Button(action: {
+                                    input = ""
+                                }) {
+                                    Image(systemName: "xmark.circle.fill")
+                                        .foregroundColor(.gray)
                                 }
+                                .padding(.trailing, 40)
+                            }
+                        },
+                        alignment: .trailing
+                    )
+                
+                
+                Spacer().frame(height: 16)
+                
+                HStack {
+                    if !input.isEmpty {
+                        
+                        Button(action: {
+                            
+                            
+                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                            
+                            
+                            let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                            impactMed.impactOccurred()
+                            
+                            
+                            
+                            if networkMonitor.isConnected {
+                                currentView = .magicScreen
+                                
+                                api.generateTrack(input: input, pat: pat, duration: duration) { result in
+                                    switch result {
+                                    case .success(let response):
+                                        let tasks = response.data.tasks
+                                        guard !tasks.isEmpty else { return }
+                                        self.responseText = tasks[0].downloadLink.absoluteURL.absoluteString
+                                        NSLog("!!! INPUT: "+input)
+                                        NSLog("!!! Status: "+String(tasks[0].taskStatusCode))
+                                        self.link = String(self.responseText)
+                                        NSLog("!!! LINK: "+self.link)
+                                    case .failure(let error):
+                                        currentView = .inputView
+                                        
+                                        self.responseText = error.localizedDescription
+                                    }
+                                }
+                                
+                            } else {
+                                
+                                showNoInternetAlert = true
+                                
                             }
                             
-                        } else {
                             
-                            showNoInternetAlert = true
                             
-                        }
+                            
+                            
+                        }, label: {
+                            HStack {
+                                Image(systemName: "arrow.right")
+                                    .font(.title)
+                                    .foregroundColor(.black)
+                                
+                                
+                                
+                            }
+                            .padding(.horizontal, 160)
+                            .padding(.vertical, 20)
+                            .background(.white)
+                            .opacity(1)
+                            .foregroundColor(.black)
+                            .cornerRadius(8)
+                        })//end button
+                        
+                        
+                    }else{
+                        Button(action: {
+                            
+                        }, label: {
+                            HStack {
+                                Image(systemName: "arrow.right")
+                                    .font(.title)
+                                    .foregroundColor(.black)
+                                
+                                
+                            }
+                            .padding(.horizontal, 160)
+                            .padding(.vertical, 20)
+                            .background(.white)
+                            .opacity(0.2)
+                            .foregroundColor(.black)
+                            .cornerRadius(8)
+                        })//end button
+                        .disabled(true)
                         
                         
                         
                         
-                        
-                    }, label: {
-                        HStack {
-                            Image(systemName: "arrow.right")
-                                .font(.title)
-                                .foregroundColor(.black)
-                            
-                            
-                            
-                        }
-                        .padding(.horizontal, 160)
-                        .padding(.vertical, 20)
-                        .background(.white)
-                        .opacity(1)
-                        .foregroundColor(.black)
-                        .cornerRadius(8)
-                    })//end button
+                    }
+                }.padding(.horizontal, 20)
+                
+                Spacer()
+                
+                
+                
+            }
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction ) {
+                    
+                    Button(action: {dismiss()}, label: {
+                        Image(systemName: "xmark")
+                            .foregroundColor(.primary)
+                            .font(.headline)
+                            .opacity(0.5)
+
+                    })
+                    
+                }
+                
+                ToolbarItem(placement: .confirmationAction ) {
                     
                     
-                }else{
-                    Button(action: {
-                        
-                    }, label: {
-                        HStack {
-                            Image(systemName: "arrow.right")
-                                .font(.title)
-                                .foregroundColor(.black)
-                            
-                            
-                        }
-                        .padding(.horizontal, 160)
-                        .padding(.vertical, 20)
-                        .background(.white)
-                        .opacity(0.2)
-                        .foregroundColor(.black)
-                        .cornerRadius(8)
-                    })//end button
-                    .disabled(true)
-                    
-                    
+                    Button(action: {dismiss()}, label: {
+                        Image(systemName: "questionmark.circle")
+                            .foregroundColor(.primary)
+                            .font(.headline)
+                            .opacity(0.5)
+                    })
                     
                     
                 }
-            }.padding(.horizontal, 20)
-            
-            Spacer()
-
-            
+                
+            }
+            .alert(isPresented: $showNoInternetAlert) {
+                Alert(
+                    title: Text("No internet connection available"),
+                    message: Text("JamBot is really cool, but you need an internet connection :/"),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
+            .navigationBarBackButtonHidden(true)
             
         }
-        .alert(isPresented: $showNoInternetAlert) {
-            Alert(
-                title: Text("No internet connection available"),
-                message: Text("JamBot is really cool, but you need an internet connection :/"),
-                dismissButton: .default(Text("OK"))
-            )
-        }
-
+        
         
     }
     
