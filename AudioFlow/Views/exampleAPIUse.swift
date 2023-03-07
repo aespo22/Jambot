@@ -70,10 +70,7 @@ struct exampleAPIUse: View {
         NavigationStack {
             VStack {
                 
-                
-                
-                
-                
+
                 Spacer()
                 
                 HStack(alignment: .center, spacing: 8) {
@@ -99,7 +96,7 @@ struct exampleAPIUse: View {
                 .frame(height: 70)
                 
                 HStack {
-                    Text("songcreat")
+                    Text("Create your song")
                         .font(.system(size: 30, weight: .bold))
                         .foregroundColor(.primary)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -109,7 +106,7 @@ struct exampleAPIUse: View {
                 
                 
                 
-                TextField("typein", text: $input, axis: .vertical)
+                TextField("Type in your keywords...", text: $input, axis: .vertical)
                     .focused($textFieldIsFocused)
                     .onAppear {
                         self.textFieldIsFocused = true
