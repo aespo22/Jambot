@@ -9,22 +9,19 @@ import SwiftUI
 
 
 struct exampleAPIUse: View {
-    
-    
-    
+     
     let api = trackGenerationAPI()
     @State private var input = ""
     @State private var link = ""
     
-    
     let pat = "YW50b25pb19hbmRfZnJpZW5kcy4xODU1MTA5Ny5lMWQwODBkNjQ5M2EyZmNkZGE3Yjg3ZjEyYjE4YTdiZmU4OWM1NGQ1LjEuMw.b952a32df79024eadc42b52091ae06a28e403a256abf0a6a3fe9538a6181842a"
-    let duration = 60
     
     @State private var responseText = ""
     @State private var currentView: CurrentView = .inputView
     
     let networkMonitor = NetworkMonitor()
     @State private var showNoInternetAlert = false
+
     
     @FocusState private var textFieldIsFocused: Bool
     
@@ -33,9 +30,12 @@ struct exampleAPIUse: View {
     
     @ObservedObject var filesManager: FilesManager
     
+    let tips = ["Do not reference existing songs", "Focus on genre, instruments, bpm, and vibe (dark, happy, etc...)", "Longer songs = longer loading times", "Have fun!"]
     
-    
-    
+    @State private var showTips = false
+
+    @State private var duration: Int = 60
+
     var body: some View {
         
         switch currentView {
@@ -44,8 +44,7 @@ struct exampleAPIUse: View {
         case .magicScreen:
             MagicScreen()
                 .task {
-                  
-                    
+           
                     let _ = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { timer in
                         let currentLink = link
                         trackStatus(downloadLink: currentLink, pat: pat) { success in
@@ -60,8 +59,7 @@ struct exampleAPIUse: View {
                 }
         case .player:
             MusicPlayerView(officialLink: .constant(link), input: .constant(input), filesManager: filesManager)
-            
-            
+        
         }
     }
     
@@ -69,6 +67,29 @@ struct exampleAPIUse: View {
         
         NavigationStack {
             VStack {
+                
+                
+                if showTips {
+                    VStack (alignment: .leading){
+                        Text("Helpful Tips")
+                            .font(.title)
+                            .bold()
+                        List(tips, id: \.self) { tip in
+                            
+                            HStack {
+                                Text(" ⚡️ ")
+                                Text(tip)
+                            }
+                        }
+                        .listStyle(.inset)
+
+
+                    }
+                    .padding(.horizontal)
+                    .padding(.vertical)
+                    
+                }
+  
                 Spacer()
                 
                 HStack(alignment: .center, spacing: 8) {
@@ -79,12 +100,11 @@ struct exampleAPIUse: View {
                                 ForEach(input.split(separator: " "), id: \.self) { word in
                                     Text(word)
                                         .font(.body)
-                                        .foregroundColor(.primary)
+                                        .foregroundColor(.black)
                                         .padding(.horizontal, 8)
                                         .padding(.vertical, 4)
-                                        .background(.gray)
+                                        .background(.white)
                                         .cornerRadius(16)
-                                        .opacity(0.2)
                                 }
                             }
                         }
@@ -103,11 +123,7 @@ struct exampleAPIUse: View {
                 }
                 .padding(.horizontal, 20)
                 
-                
-                
-                
-                
-                
+ 
                 
                 TextField("Type your song description", text: $input, axis: .vertical)
                     .focused($textFieldIsFocused)
@@ -141,23 +157,31 @@ struct exampleAPIUse: View {
                         alignment: .trailing
                     )
                 
+                Picker(selection: $duration, label: Text("Duration")) {
+                    ForEach(30...300, id: \.self) { seconds in
+                        Text("\(seconds) seconds")
+                    }
+                }
+                .pickerStyle(.wheel)
+                .frame(height: 100)
+                
                 
                 Spacer().frame(height: 16)
+                
+                
+                
                 
                 HStack {
                     if !input.isEmpty {
                         
                         Button(action: {
                             
-                            
                             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                             
                             
                             let impactMed = UIImpactFeedbackGenerator(style: .medium)
                             impactMed.impactOccurred()
-                            
-                            
-                            
+                                         
                             if networkMonitor.isConnected {
                                 currentView = .magicScreen
                                 
@@ -211,11 +235,11 @@ struct exampleAPIUse: View {
                             
                         }, label: {
                             HStack {
+                                
                                 Image(systemName: "arrow.right")
                                     .font(.title)
                                     .foregroundColor(.black)
-                                
-                                
+               
                             }
                             .padding(.horizontal, 160)
                             .padding(.vertical, 20)
@@ -225,17 +249,12 @@ struct exampleAPIUse: View {
                             .cornerRadius(8)
                         })//end button
                         .disabled(true)
-                        
-                        
-                        
-                        
+                
                     }
                 }.padding(.horizontal, 20)
                 
                 Spacer()
-                
-                
-                
+   
             }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction ) {
@@ -245,24 +264,21 @@ struct exampleAPIUse: View {
                             .foregroundColor(.primary)
                             .font(.headline)
                             .opacity(0.5)
-
+                        
                     })
-                    
                 }
                 
                 ToolbarItem(placement: .confirmationAction ) {
-                    
-                    
-                    Button(action: {dismiss()}, label: {
-                        Image(systemName: "questionmark.circle")
-                            .foregroundColor(.primary)
-                            .font(.headline)
-                            .opacity(0.5)
-                    })
-                    
-                    
+    
+                    Button(action: {
+                                showTips.toggle()
+                            }, label: {
+                                Image(systemName: showTips ? "questionmark.circle.fill" : "questionmark.circle")
+                                            .foregroundColor(.primary)
+                                            .font(.headline)
+                                            .opacity(0.5)
+                            })
                 }
-                
             }
             .alert(isPresented: $showNoInternetAlert) {
                 Alert(

@@ -18,6 +18,8 @@ struct MagicScreen: View {
     
     @State private var scale: CGFloat = 0.5
     
+
+    
     var body: some View {
         
         ZStack {
@@ -107,6 +109,8 @@ struct MagicScreen: View {
             
         }
         .onAppear {
+            UIApplication.shared.isIdleTimerDisabled = true
+
             Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { _ in
                 withAnimation(Animation.linear(duration: 10)) {
                     self.colors = [self.colors[1], self.getNewColor()]
