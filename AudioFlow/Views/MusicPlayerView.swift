@@ -49,7 +49,7 @@ class SoundManager: ObservableObject {
         try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [.mixWithOthers])
         
         if let duration = getDuration() {
-            let remainingTime = duration - pauseTime
+            _ = duration - pauseTime
             seekTo(time: pauseTime)
             audioPlayer?.play()
             startUpdatingCurrentTime(progressHandler: { [weak self] currentTime in

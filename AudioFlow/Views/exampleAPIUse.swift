@@ -9,7 +9,7 @@ import SwiftUI
 
 
 struct exampleAPIUse: View {
-     
+    
     let api = trackGenerationAPI()
     @State private var input = ""
     @State private var link = ""
@@ -21,7 +21,7 @@ struct exampleAPIUse: View {
     
     let networkMonitor = NetworkMonitor()
     @State private var showNoInternetAlert = false
-
+    
     
     @FocusState private var textFieldIsFocused: Bool
     
@@ -30,12 +30,17 @@ struct exampleAPIUse: View {
     
     @ObservedObject var filesManager: FilesManager
     
-    let tips = ["Do not reference existing songs", "Focus on genre, instruments, bpm, and vibe (dark, happy, etc...)", "Longer songs = longer loading times", "Have fun!"]
+    let tips = ["donotreference", "focusonyour", "longersongslonger", "havefun"]
+
+    
+    let examples = ["darktechno", "bpmtrackhard", "symphonyrising", "morningrelax"]
+
+    
     
     @State private var showTips = false
-
+    
     @State private var duration: Int = 60
-
+    
     var body: some View {
         
         switch currentView {
@@ -44,7 +49,7 @@ struct exampleAPIUse: View {
         case .magicScreen:
             MagicScreen()
                 .task {
-           
+                    
                     let _ = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { timer in
                         let currentLink = link
                         trackStatus(downloadLink: currentLink, pat: pat) { success in
@@ -59,7 +64,7 @@ struct exampleAPIUse: View {
                 }
         case .player:
             MusicPlayerView(officialLink: .constant(link), input: .constant(input), filesManager: filesManager)
-        
+            
         }
     }
     
@@ -68,28 +73,7 @@ struct exampleAPIUse: View {
         NavigationStack {
             VStack {
                 
-                
-                if showTips {
-                    VStack (alignment: .leading){
-                        Text("felp")
-                            .font(.title)
-                            .bold()
-                        List(tips, id: \.self) { tip in
-                            
-                            HStack {
-                                Text(" ⚡️ ")
-                                Text(tip)
-                            }
-                        }
-                        .listStyle(.inset)
 
-
-                    }
-                    .padding(.horizontal)
-                    .padding(.vertical)
-                    
-                }
-  
                 Spacer()
                 
                 HStack(alignment: .center, spacing: 8) {
@@ -123,7 +107,7 @@ struct exampleAPIUse: View {
                 }
                 .padding(.horizontal, 20)
                 
- 
+                
                 
                 TextField("typein", text: $input, axis: .vertical)
                     .focused($textFieldIsFocused)
@@ -181,7 +165,7 @@ struct exampleAPIUse: View {
                             
                             let impactMed = UIImpactFeedbackGenerator(style: .medium)
                             impactMed.impactOccurred()
-                                         
+                            
                             if networkMonitor.isConnected {
                                 currentView = .magicScreen
                                 
@@ -239,7 +223,7 @@ struct exampleAPIUse: View {
                                 Image(systemName: "arrow.right")
                                     .font(.title)
                                     .foregroundColor(.black)
-               
+                                
                             }
                             .padding(.horizontal, 160)
                             .padding(.vertical, 20)
@@ -249,12 +233,62 @@ struct exampleAPIUse: View {
                             .cornerRadius(8)
                         })//end button
                         .disabled(true)
-                
+                        
                     }
                 }.padding(.horizontal, 20)
                 
                 Spacer()
-   
+                
+            }
+            .popover(isPresented: $showTips) {
+                VStack {
+                    Button(action: {showTips.toggle()}, label: {
+                        Image(systemName: "chevron.down")
+                            .foregroundColor(.primary)
+                            .font(.headline)
+                            .opacity(0.5)
+                        
+                    })
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    Spacer().frame(height: 20)
+                    Text("felp")
+                        .font(.title)
+                        .bold()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                   
+                    
+                    List(tips, id: \.self) { tip in
+                        
+                        HStack {
+                            Text(" ⚡️ ")
+                            Text(LocalizedStringKey(tip))
+                        }
+                        
+                        
+                    }
+                    .listStyle(.inset)
+                    
+                    Text("examples")
+                        .font(.title)
+                        .bold()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    List(examples, id: \.self) { sentence in
+                        
+                        HStack {
+                            Text(" 📖 ")
+                            Text(LocalizedStringKey(sentence)).italic()
+                        }
+                        
+                    }
+                    
+                    .listStyle(.inset)
+                    
+                    
+                }
+                
+                .padding()
+            
             }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction ) {
@@ -269,15 +303,15 @@ struct exampleAPIUse: View {
                 }
                 
                 ToolbarItem(placement: .confirmationAction ) {
-    
+                    
                     Button(action: {
-                                showTips.toggle()
-                            }, label: {
-                                Image(systemName: showTips ? "questionmark.circle.fill" : "questionmark.circle")
-                                            .foregroundColor(.primary)
-                                            .font(.headline)
-                                            .opacity(0.5)
-                            })
+                        showTips.toggle()
+                    }, label: {
+                        Image(systemName: showTips ? "questionmark.circle.fill" : "questionmark.circle")
+                            .foregroundColor(.primary)
+                            .font(.headline)
+                            .opacity(0.5)
+                    })
                 }
             }
             .alert(isPresented: $showNoInternetAlert) {
