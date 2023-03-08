@@ -141,14 +141,30 @@ struct exampleAPIUse: View {
                         alignment: .trailing
                     )
                 
-                Picker(selection: $duration, label: Text("Duration")) {
-                    ForEach(30...300, id: \.self) { seconds in
-                        Text("\(seconds) seconds")
+                HStack {
+
+                    Picker(selection: $duration, label: Text("Duration")) {
+                        ForEach(1...10, id: \.self) { index in
+                            let seconds = index * 30
+                            Text("\(seconds) seconds")
+                                .tag(seconds)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .accentColor(.black)
+                        .scaledToFit()
+
+                       
                     }
+                    .accentColor(.black)
+                    .padding()
+                    .background(.white)
+                    .cornerRadius(8)
+                    .pickerStyle(.menu)
+
                 }
-                .pickerStyle(.wheel)
-                .frame(height: 100)
-                
+                .opacity(0.95)
+
+                .padding(.horizontal)
                 
                 Spacer().frame(height: 16)
                 
