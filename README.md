@@ -4,5 +4,5 @@
 
 
 
-🎹 AI text to royalty-free music app using the Murbert API made for educational purposes 💽
+🎹 AI text to royalty-free music app using the Murbert API made for educational purposes 
 
