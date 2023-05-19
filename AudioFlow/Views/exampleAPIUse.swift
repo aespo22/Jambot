@@ -14,7 +14,7 @@ struct exampleAPIUse: View {
     @State private var input = ""
     @State private var link = ""
     
-    let pat = "YW50b25pb19hbmRfZnJpZW5kcy4xODU1MTA5Ny5lMWQwODBkNjQ5M2EyZmNkZGE3Yjg3ZjEyYjE4YTdiZmU4OWM1NGQ1LjEuMw.b952a32df79024eadc42b52091ae06a28e403a256abf0a6a3fe9538a6181842a"
+    let pat = "INSERT YOUR PATH"
     
     @State private var responseText = ""
     @State private var currentView: CurrentView = .inputView
